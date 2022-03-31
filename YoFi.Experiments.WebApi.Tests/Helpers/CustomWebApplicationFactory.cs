@@ -43,16 +43,6 @@ namespace YoFi.Tests.Integration.Helpers
                     .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
                 db.Database.EnsureCreated();
-
-                try
-                {
-                    //Utilities.InitializeDbForTests(db);
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(ex, "An error occurred seeding the " +
-                        "database with test messages. Error: {Message}", ex.Message);
-                }
             });
         }
     }
