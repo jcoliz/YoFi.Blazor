@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\YoFi.Core\YoFi.Core.csproj" />
+    <ProjectReference Include="..\submodules\YoFi\YoFi.Core\YoFi.Core.csproj" />
   </ItemGroup>
 
 </Project>
