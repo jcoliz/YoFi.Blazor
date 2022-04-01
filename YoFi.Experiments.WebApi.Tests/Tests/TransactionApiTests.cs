@@ -113,6 +113,25 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
     }
 
     [TestMethod]
+    public async Task GetPage2()
+    {
+        // Given: A long set of items, which is longer than one page, but not as long as two pages 
+        var pagesize = 25; // BaseRepository<BudgetTx>.DefaultPageSize;
+        var items = FakeObjects<Transaction>.Make(pagesize).Add(pagesize / 2).SaveTo(this);
+
+        // When: Getting the Index for page 2
+        var response = await client.GetAsync(urlroot + "?page=2");
+
+        // Then: Success
+        response.EnsureSuccessStatusCode();
+
+        // And: Only 2nd page items returned
+        var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+        var actual = JsonSerializer.Deserialize<List<Transaction>>(document.RootElement.GetProperty("items"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        Assert.IsTrue(actual.SequenceEqual(items.Group(1)));
+    }
+
+    [TestMethod]
     public async Task GetSwagger()
     {
         // When: Getting the swagger file
