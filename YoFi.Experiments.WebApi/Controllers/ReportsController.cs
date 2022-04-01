@@ -29,7 +29,8 @@ namespace YoFi.Experiments.WebApi.Controllers
         [ProducesResponseType(typeof(List<ReportDefinition>), StatusCodes.Status200OK)]
         public IActionResult Get()
         {
-            return Ok();
+            var result = _builder.Definitions.ToList();
+            return Ok(result);
         }
 
         /// <summary>

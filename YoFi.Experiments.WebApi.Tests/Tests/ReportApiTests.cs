@@ -21,6 +21,7 @@ namespace YoFi.Experiments.WebApi.Tests
         protected static IntegrationContext integrationcontext;
         protected static HttpClient client => integrationcontext.client;
         protected static ApplicationDbContext context => integrationcontext.context;
+        protected static SampleDataStore data;
 
         protected string urlroot => "/Reports";
 
@@ -62,9 +63,16 @@ namespace YoFi.Experiments.WebApi.Tests
         #region Init/Cleanup
 
         [ClassInitialize]
-        public static void InitialSetup(TestContext tcontext)
+        public static async Task InitialSetup(TestContext tcontext)
         {
             integrationcontext = new IntegrationContext(tcontext.FullyQualifiedTestClassName);
+
+            await SampleDataStore.LoadFullAsync();
+            data = SampleDataStore.Single;
+
+            context.Transactions.AddRange(data.Transactions);
+            context.BudgetTxs.AddRange(data.BudgetTxs);
+            context.SaveChanges();
         }
 
         [ClassCleanup]
@@ -81,10 +89,11 @@ namespace YoFi.Experiments.WebApi.Tests
         public async Task ListDefinitions()
         {
             // When: Requesting report definitions
-            var response = await client.GetAsync(urlroot);
-            response.EnsureSuccessStatusCode();
+            var document = await WhenGetAsync(urlroot);
 
             // Then: Report definitions are returned
+            var actual = JsonSerializer.Deserialize<List<ReportDefinition>>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            Assert.IsTrue(actual.Count > 10);
         }
 
         [TestMethod]
