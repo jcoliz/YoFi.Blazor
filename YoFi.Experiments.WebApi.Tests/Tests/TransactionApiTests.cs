@@ -278,4 +278,60 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         // Then: NotFound
         Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
     }
+
+    [TestMethod]
+    public async Task Create()
+    {
+        // Given: There is one item in the database, and another one waiting to be created
+        var items = FakeObjects<Transaction>.Make(1).SaveTo(this).Add(1);
+        var expected = items.Last();
+
+        // When: Creating a new item
+        var response = await WhenSendAsync($"{urlroot}/", expected);
+
+        // Then: Succeeds
+        response.EnsureSuccessStatusCode();
+
+        // And: Now are two items in database
+        Assert.AreEqual(items.Count, context.Set<Transaction>().Count());
+
+        // And: The last one is the one we just added
+        var actual = context.Set<Transaction>().OrderBy(x => x.ID).AsNoTracking().Last();
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    public async Task Delete()
+    {
+        // Given: There are two items in the database, one of which we care about
+        var items = FakeObjects<Transaction>.Make(5).Add(1).SaveTo(this);
+        var id = items.Group(1).Single().ID;
+
+        // When: Deleting the selected item
+        var response = await client.DeleteAsync($"{urlroot}/{id}");
+
+        // Then: Succeeds
+        response.EnsureSuccessStatusCode();
+
+        // And: Now is only first group of items in database
+        Assert.AreEqual(items.Group(0).Count, context.Set<Transaction>().Count());
+
+        // And: The deleted item cannot be found;
+        Assert.IsFalse(context.Set<Transaction>().Any(x => x.ID == id));
+    }
+
+    [TestMethod]
+    public async Task DeleteNotFound()
+    {
+        // Given: There are 5 items in the database
+        var data = FakeObjects<Transaction>.Make(4).SaveTo(this).Add(1);
+        var newvalues = data.Group(1).Single();
+
+        // When: Deleting an ID which doesn't exist
+        var id = data.Group(0).Max(x => x.ID) + 1;
+        var response = await client.DeleteAsync($"{urlroot}/{id}");
+
+        // Then: NotFound
+        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+    }
 }
