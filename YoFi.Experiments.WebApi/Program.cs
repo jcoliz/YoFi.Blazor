@@ -1,5 +1,6 @@
 using Common.DotNet;
 using YoFi.Core;
+using YoFi.Core.Reports;
 using YoFi.Core.Repositories;
 using YoFi.Experiments.WebApi.Data;
 
@@ -15,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IClock>(new SystemClock());
 builder.Services.AddScoped<IDataContext,MockDataContext>();
 builder.Services.AddScoped<ITransactionRepository,TransactionRepository>();
+builder.Services.AddScoped<IReportEngine, ReportBuilder>();
 
 var app = builder.Build();
 
