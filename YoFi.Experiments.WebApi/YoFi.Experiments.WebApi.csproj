@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="jcoliz.FakeObjects" Version="1.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,5 +17,10 @@
   <ItemGroup>
       <InternalsVisibleTo Include="MyTestProject" />
   </ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="dotnet tool restore" />
+		<Exec Command="dotnet swagger tofile --output swagger.json $(OutputPath)\$(AssemblyName).dll v1 " />
+	</Target>
 
 </Project>
