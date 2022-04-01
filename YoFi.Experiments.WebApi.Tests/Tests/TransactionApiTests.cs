@@ -1,3 +1,4 @@
+using jcoliz.FakeObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text.Json;
 using System.Net.Http;
@@ -5,11 +6,14 @@ using System.Threading.Tasks;
 using YoFi.AspNet.Data;
 using YoFi.Tests.Integration.Helpers;
 using YoFi.Core.Models;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace YoFi.Experiments.WebApi.Tests;
 
 [TestClass]
-public class TransactionApiTests
+public class TransactionApiTests: IFakeObjectsSaveTarget
 {
     #region Fields
 
@@ -24,6 +28,21 @@ public class TransactionApiTests
     #region Properties
 
     public TestContext TestContext { get; set; }
+
+    #endregion
+
+    #region Helpers
+
+    public void AddRange(IEnumerable objects)
+    {
+        if (objects is IEnumerable<Transaction> txs)
+        {
+            context.AddRange(txs);
+            context.SaveChanges();
+        }
+        else
+            throw new System.NotImplementedException();
+    }
 
     #endregion
 
@@ -73,5 +92,23 @@ public class TransactionApiTests
 
         var totalitems = document.RootElement.GetProperty("pageInfo").GetProperty("totalItems").GetInt32();
         Assert.AreEqual(0, totalitems);
+    }
+
+    [TestMethod]
+    public async Task GetSome()
+    {
+        // Given: Some items in database
+        var items = FakeObjects<Transaction>.Make(7).SaveTo(this);
+
+        // When: Getting "/"
+        var response = await client.GetAsync(urlroot);
+
+        // Then: Success
+        response.EnsureSuccessStatusCode();
+
+        // And: Expected items returned
+        var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+        var actual = JsonSerializer.Deserialize<List<Transaction>>(document.RootElement.GetProperty("items"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        Assert.IsTrue(actual.SequenceEqual(items));
     }
 }
