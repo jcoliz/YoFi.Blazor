@@ -23,6 +23,8 @@ namespace YoFi.Experiments.WebApi.Tests
         protected static ApplicationDbContext context => integrationcontext.context;
         protected static SampleDataStore data;
 
+        private const int sampledatayear = 2021;
+
         protected string urlroot => "/Reports";
 
         #endregion
@@ -40,7 +42,7 @@ namespace YoFi.Experiments.WebApi.Tests
             var response = await client.GetAsync(url);
 
             // Then: Result as expected
-            Assert.AreEqual(expectedresult, response.StatusCode);
+            Assert.AreEqual(expectedresult, response.StatusCode, url);
 
             // And: Response is valid JSON, if valid
             JsonDocument document = null;
@@ -101,7 +103,7 @@ namespace YoFi.Experiments.WebApi.Tests
         {
             // When: Requesting report {name}
             var name = "all";
-            var response = await WhenSendAsync(urlroot, new ReportParameters() { id = name, year = 2021 });
+            var response = await WhenSendAsync(urlroot, new ReportParameters() { id = name, year = sampledatayear });
             response.EnsureSuccessStatusCode();
 
             // Then: Expected report is returned
@@ -112,13 +114,61 @@ namespace YoFi.Experiments.WebApi.Tests
         }
 
         [TestMethod]
+        public async Task GetAllReports()
+        {
+            // Given: The list of all report definitions
+            var document = await WhenGetAsync(urlroot);
+            var definitions = JsonSerializer.Deserialize<List<ReportDefinition>>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            var shortnames = definitions.Select(x => x.id);
+
+            foreach(var name in shortnames)
+            {
+                // When: Requesting each report {name}
+                var response = await WhenSendAsync(urlroot, new ReportParameters() { id = name, year = sampledatayear });
+
+                // Then: OK
+                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, name);
+
+                // And: Expected report is returned
+                document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+                var actual = JsonSerializer.Deserialize<WireReport>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                Assert.AreEqual(name, actual.Definition);
+            }
+        }
+
+        [TestMethod]
+        public async Task GetReportNotFound()
+        {
+            // When: Requesting report {name} where it won't be found
+            var name = "bogus";
+            var response = await WhenSendAsync(urlroot, new ReportParameters() { id = name, year = sampledatayear });
+
+            // Then: Not Found
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+
+        [TestMethod]
         public async Task GetSummary()
         {
             // When: Requesting summary report
-            var response = await WhenSendAsync($"{urlroot}/Summary", new ReportParameters() );
+            var response = await WhenSendAsync($"{urlroot}/Summary", new ReportParameters() { year = sampledatayear } );
             response.EnsureSuccessStatusCode();
 
             // Then: Expected summary reports are returned
+            var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+            var actual = JsonSerializer.Deserialize<List<List<WireReport>>>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            
+            // Two report groups
+            Assert.AreEqual(2, actual.Count);
+
+            // The reports each group
+            Assert.AreEqual(3, actual[0].Count);
+            Assert.AreEqual(3, actual[1].Count);
+
+            // Totals as expected
+            Assert.AreEqual(31509.36m, actual[0].Last().GrandTotal);
+            Assert.AreEqual(5629.74m, actual[1].Last().GrandTotal);
         }
 
         #endregion

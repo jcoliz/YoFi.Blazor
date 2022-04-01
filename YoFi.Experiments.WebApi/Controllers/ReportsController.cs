@@ -5,6 +5,9 @@ using YoFi.Core.Reports;
 
 namespace YoFi.Experiments.WebApi.Controllers
 {
+    /// <summary>
+    /// Exposes an IReportEngine to the network
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
@@ -24,7 +27,6 @@ namespace YoFi.Experiments.WebApi.Controllers
         /// <summary>
         /// Returns the report definitions
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(typeof(List<ReportDefinition>), StatusCodes.Status200OK)]
         public IActionResult Get()
@@ -36,27 +38,41 @@ namespace YoFi.Experiments.WebApi.Controllers
         /// <summary>
         /// Generates a report for a specific definition
         /// </summary>
-        /// <param name="definition"></param>
+        /// <param name="parameters"></param>
         [HttpPost]
         [ProducesResponseType(typeof(WireReport), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Post([FromBody] ReportParameters parameters)
+        public IActionResult Post(ReportParameters parameters)
         {
-            var report = _builder.Build(parameters);
-            var result = WireReport.BuildFrom(report);
-            return Ok(result);
+            try
+            {
+                var report = _builder.Build(parameters);
+                var result = WireReport.BuildFrom(report);
+                return Ok(result);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         /// <summary>
         /// Generates the summary reports
         /// </summary>
-        /// <param name="definition"></param>
+        /// <param name="parameters"></param>
         [HttpPost("Summary")]
-        [ProducesResponseType(typeof(List<List<Report>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<List<WireReport>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Summary([FromBody] ReportParameters parameters)
+        public IActionResult Summary(ReportParameters parameters)
         {
-            return Ok();
+            var summary = _builder.BuildSummary(parameters);
+            var result = summary
+                .Select(g => g
+                   .Select(r => WireReport.BuildFrom(r))
+                   .ToList()
+                )
+                .ToList();
+            return Ok(result);
         }
     }
 }
