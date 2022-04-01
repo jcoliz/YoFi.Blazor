@@ -86,6 +86,13 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         return WhenGetAsync($"{urlroot}{urladd}");
     }
 
+    protected void ThenResultsAreEqual<T>(JsonDocument document, IEnumerable<T> items)
+    {
+        // Then: The expected items are returned
+        var actual = JsonSerializer.Deserialize<List<T>>(document.RootElement.GetProperty("items"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        Assert.IsTrue(actual.SequenceEqual(items));
+    }
+
     #endregion
 
     #region Init/Cleanup
@@ -141,8 +148,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         var document = await WhenGettingIndex(new WireQueryParameters());
 
         // And: Expected items returned
-        var actual = JsonSerializer.Deserialize<List<Transaction>>(document.RootElement.GetProperty("items"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-        Assert.IsTrue(actual.SequenceEqual(items));
+        ThenResultsAreEqual(document, items);
     }
 
     [TestMethod]
@@ -156,8 +162,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         var document = await WhenGettingIndex(new WireQueryParameters() { Page = 2 } );
 
         // And: Only 2nd page items returned
-        var actual = JsonSerializer.Deserialize<List<Transaction>>(document.RootElement.GetProperty("items"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-        Assert.IsTrue(actual.SequenceEqual(items.Group(1)));
+        ThenResultsAreEqual(document, items.Group(1));
     }
 
     [TestMethod]
