@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Net;
+using System;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace YoFi.Experiments.WebApi.Tests;
 
@@ -46,6 +49,35 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         else
             throw new System.NotImplementedException();
     }
+
+    protected Dictionary<string, string> FormDataFromObject<T>(T item)
+    {
+        var result = new Dictionary<string, string>();
+
+        var properties = typeof(T).GetProperties();
+        var chosen = properties.Where(x => x.CustomAttributes.Any(y => y.AttributeType == typeof(System.ComponentModel.DataAnnotations.EditableAttribute)));
+
+        foreach (var property in chosen)
+        {
+            var t = property.PropertyType;
+            object o = property.GetValue(item);
+            string s = string.Empty;
+
+            if (t == typeof(string))
+                s = (string)o;
+            else if (t == typeof(decimal))
+                s = ((decimal)o).ToString();
+            else if (t == typeof(DateTime))
+                s = ((DateTime)o).ToString("MM/dd/yyyy");
+            else
+                throw new NotImplementedException();
+
+            result[property.Name] = s;
+        }
+
+        return result;
+    }
+
 
     protected async Task<JsonDocument> WhenGetAsync(string url, HttpStatusCode expectedresult = HttpStatusCode.OK)
     {
@@ -87,6 +119,15 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         var urladd = (terms.Any()) ? "?" + string.Join("&", terms) : string.Empty;
 
         return WhenGetAsync($"{urlroot}{urladd}");
+    }
+
+    protected async Task<HttpResponseMessage> WhenSendAsync<T>(string url, T item, HttpMethod method = null)
+    {
+        var request = new HttpRequestMessage(method ?? HttpMethod.Post, url);
+        request.Content = new StringContent(JsonSerializer.Serialize<T>(item), Encoding.UTF8, "application/json");
+        var outresponse = await client.SendAsync(request);
+
+        return outresponse;
     }
 
     protected void ThenResultsAreEqual<T>(JsonDocument document, IEnumerable<T> items)
@@ -178,7 +219,6 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         ThenResultsAreEqual(document, items.Group(0));
     }
 
-
     [TestMethod]
     public async Task IndexPage2()
     {
@@ -234,4 +274,37 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         await WhenGetAsync($"{urlroot}{id}",HttpStatusCode.NotFound);
     }
 
+    [TestMethod]
+    public async Task Edit()
+    {
+        // Given: There are 5 items in the database, one of which we care about, plus an additional item to be use as edit values
+        var data = FakeObjects<Transaction>.Make(4).SaveTo(this).Add(1);
+        var id = data.Group(0).Last().ID;
+        var newvalues = data.Group(1).Single();
+
+        // When: Editing the chosen item with the new values
+        var response = await WhenSendAsync($"{urlroot}{id}", newvalues, HttpMethod.Put);
+
+        // Then: Succeeds
+        response.EnsureSuccessStatusCode();
+
+        // And: Then item was updated
+        var actual = context.Set<Transaction>().Where(x => x.ID == id).AsNoTracking().Single();
+        Assert.AreEqual(newvalues, actual);
+    }
+
+    [TestMethod]
+    public async Task EditNotFound()
+    {
+        // Given: There are 5 items in the database
+        var data = FakeObjects<Transaction>.Make(4).SaveTo(this).Add(1);
+        var newvalues = data.Group(1).Single();
+
+        // When: Editing an ID which doesn't exist the new values
+        var id = data.Group(0).Max(x => x.ID) + 1;
+        var response = await WhenSendAsync($"{urlroot}{id}", newvalues, HttpMethod.Put);
+
+        // Then: NotFound
+        Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+    }
 }
