@@ -1,5 +1,4 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
 using YoFi.Core.Models;
 using YoFi.Tests.Integration.Helpers;
 
@@ -29,15 +28,4 @@ public class TransactionApiTests: BaseObjectApiTests<Transaction>
     }
 
     #endregion
-
-    [TestMethod]
-    public async Task GetSwagger()
-    {
-        // When: Getting the swagger file
-        var response = await client.GetAsync("/swagger/v1/swagger.json");
-
-        // Then: Success
-        response.EnsureSuccessStatusCode();
-    }
-
 }
