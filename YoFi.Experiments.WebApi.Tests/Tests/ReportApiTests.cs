@@ -14,51 +14,17 @@ using YoFi.Tests.Integration.Helpers;
 namespace YoFi.Experiments.WebApi.Tests
 {
     [TestClass]
-    public class ReportApiTests
+    public class ReportApiTests: BaseApiTests
     {
         #region Fields
 
-        protected static IntegrationContext integrationcontext;
-        protected static HttpClient client => integrationcontext.client;
-        protected static ApplicationDbContext context => integrationcontext.context;
-        protected static SampleDataStore data;
-
         private const int sampledatayear = 2021;
-
-        protected string urlroot => "/Reports";
 
         #endregion
 
         #region Properties
 
-        public TestContext TestContext { get; set; }
-
-        #endregion
-
-        #region Helpers
-        protected async Task<JsonDocument> WhenGetAsync(string url, HttpStatusCode expectedresult = HttpStatusCode.OK)
-        {
-            // When: Getting {url}
-            var response = await client.GetAsync(url);
-
-            // Then: Result as expected
-            Assert.AreEqual(expectedresult, response.StatusCode, url);
-
-            // And: Response is valid JSON, if valid
-            JsonDocument document = null;
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
-
-            return document;
-        }
-        protected async Task<HttpResponseMessage> WhenSendAsync<T>(string url, T item, HttpMethod method = null)
-        {
-            var request = new HttpRequestMessage(method ?? HttpMethod.Post, url);
-            request.Content = new StringContent(JsonSerializer.Serialize<T>(item), Encoding.UTF8, "application/json");
-            var outresponse = await client.SendAsync(request);
-
-            return outresponse;
-        }
+        protected override string urlroot { get; set; } = "/Reports";
 
         #endregion
 

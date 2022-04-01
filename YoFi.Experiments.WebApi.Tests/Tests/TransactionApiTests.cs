@@ -1,40 +1,28 @@
 using jcoliz.FakeObjects;
+using jcoliz.OfficeOpenXml.Serializer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Text.Json;
-using System.Net.Http;
-using System.Threading.Tasks;
-using YoFi.AspNet.Data;
-using YoFi.Tests.Integration.Helpers;
-using YoFi.Core.Models;
-using YoFi.Core.Repositories.Wire;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Net;
-using System;
-using Microsoft.EntityFrameworkCore;
-using System.Text;
-using jcoliz.OfficeOpenXml.Serializer;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Web;
+using YoFi.Core.Models;
+using YoFi.Core.Repositories.Wire;
+using YoFi.Tests.Integration.Helpers;
 
 namespace YoFi.Experiments.WebApi.Tests;
 
 [TestClass]
-public class TransactionApiTests: IFakeObjectsSaveTarget
+public class TransactionApiTests: BaseApiTests, IFakeObjectsSaveTarget
 {
-    #region Fields
-
-    protected static IntegrationContext integrationcontext;
-    protected static HttpClient client => integrationcontext.client;
-    protected static ApplicationDbContext context => integrationcontext.context;
-
-    protected string urlroot => "/Transactions";
-
-    #endregion
-
     #region Properties
 
-    public TestContext TestContext { get; set; }
+    protected override string urlroot { get; set; } = "/Transactions";
 
     #endregion
 
@@ -49,22 +37,6 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         }
         else
             throw new System.NotImplementedException();
-    }
-
-    protected async Task<JsonDocument> WhenGetAsync(string url, HttpStatusCode expectedresult = HttpStatusCode.OK)
-    {
-        // When: Getting {url}
-        var response = await client.GetAsync(url);
-
-        // Then: Result as expected
-        Assert.AreEqual(response.StatusCode, expectedresult);
-
-        // And: Response is valid JSON, if valid
-        JsonDocument document = null;
-        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
-
-        return document;
     }
 
     protected Task<JsonDocument> WhenGettingIndex(IWireQueryParameters parms)
@@ -91,15 +63,6 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         var urladd = (terms.Any()) ? "?" + string.Join("&", terms) : string.Empty;
 
         return WhenGetAsync($"{urlroot}/{urladd}");
-    }
-
-    protected async Task<HttpResponseMessage> WhenSendAsync<T>(string url, T item, HttpMethod method = null)
-    {
-        var request = new HttpRequestMessage(method ?? HttpMethod.Post, url);
-        request.Content = new StringContent(JsonSerializer.Serialize<T>(item), Encoding.UTF8, "application/json");
-        var outresponse = await client.SendAsync(request);
-
-        return outresponse;
     }
 
     protected void ThenResultsAreEqual<T>(JsonDocument document, IEnumerable<T> items)
