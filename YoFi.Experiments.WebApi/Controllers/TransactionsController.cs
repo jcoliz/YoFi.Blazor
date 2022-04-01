@@ -5,6 +5,12 @@ using YoFi.Core.Repositories.Wire;
 
 namespace YoFi.Experiments.WebApi.Controllers;
 
+/// <summary>
+/// Super thin API controller for Transaction Repository
+/// </summary>
+/// <remarks>
+/// This is meant to be so thin it could be auto-generated
+/// </remarks>
 [ApiController]
 [Route("[controller]")]
 [Produces("application/json")]
@@ -29,6 +35,10 @@ public class TransactionsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
+        // TODO: Use a filter
+        if (!await _repository.TestExistsByIdAsync(id))
+            return NotFound();
+
         var result = await _repository.GetByIdAsync(id);
         return Ok(result);
     }
@@ -36,6 +46,10 @@ public class TransactionsController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
+        // TODO: Use a filter
+        if (!await _repository.TestExistsByIdAsync(id))
+            return NotFound();
+
         var item = await _repository.GetByIdAsync(id);
         await _repository.RemoveAsync(item);
         return Ok();
@@ -51,6 +65,10 @@ public class TransactionsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Edit(int id, [Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
     {
+        // TODO: Use a filter
+        if (!await _repository.TestExistsByIdAsync(id))
+            return NotFound();
+
         var item = await _repository.GetByIdAsync(id);
         transaction.ID = id;
         await _repository.UpdateAsync(transaction);

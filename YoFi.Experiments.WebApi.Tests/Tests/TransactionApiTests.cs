@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Net;
 
 namespace YoFi.Experiments.WebApi.Tests;
 
@@ -46,16 +47,18 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
             throw new System.NotImplementedException();
     }
 
-    protected async Task<JsonDocument> WhenGetAsync(string url)
+    protected async Task<JsonDocument> WhenGetAsync(string url, HttpStatusCode expectedresult = HttpStatusCode.OK)
     {
         // When: Getting {url}
         var response = await client.GetAsync(url);
 
-        // Then: Success
-        response.EnsureSuccessStatusCode();
+        // Then: Result as expected
+        Assert.AreEqual(response.StatusCode, expectedresult);
 
-        // And: Response is valid JSON
-        var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+        // And: Response is valid JSON, if valid
+        JsonDocument document = null;
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
 
         return document;
     }
@@ -125,6 +128,16 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
     #endregion
 
     [TestMethod]
+    public async Task GetSwagger()
+    {
+        // When: Getting the swagger file
+        var response = await client.GetAsync("/swagger/v1/swagger.json");
+
+        // Then: Success
+        response.EnsureSuccessStatusCode();
+    }
+
+    [TestMethod]
     public async Task GetEmpty()
     {
         // Given: No data in database
@@ -166,12 +179,44 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
     }
 
     [TestMethod]
-    public async Task GetSwagger()
+    public async Task IndexSearch()
     {
-        // When: Getting the swagger file
-        var response = await client.GetAsync("/swagger/v1/swagger.json");
+        // Given: There are 5 items in the database, one of which we care about
+        var chosen = FakeObjects<Transaction>.Make(5).SaveTo(this).Take(1);
 
-        // Then: Success
-        response.EnsureSuccessStatusCode();
+        // When: Searching the index for the focused item's testkey
+        var q = (string)TestKey<Transaction>.Order()(chosen.Single());
+        var document = await WhenGettingIndex(new WireQueryParameters() { Query = q });
+
+        // Then: The expected items are returned
+        ThenResultsAreEqual(document, chosen);
     }
+
+    [TestMethod]
+    public async Task Details()
+    {
+        // Given: There are 5 items in the database, one of which we care about
+        var expected = FakeObjects<Transaction>.Make(5).SaveTo(this).Last();
+        var id = expected.ID;
+
+        // When: Getting details for the chosen item
+        var document = await WhenGetAsync($"{urlroot}{id}");
+
+        // Then: That item is shown
+        var actual = JsonSerializer.Deserialize<Transaction>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    public async Task DetailsNotFound()
+    {
+        // Given: There are 5 items in the database
+        var items = FakeObjects<Transaction>.Make(5).SaveTo(this);
+
+        // When: Getting details for an ID which is not in the set
+        // Then: Not Found
+        var id = items.Max(x=>x.ID) + 1;
+        await WhenGetAsync($"{urlroot}{id}",HttpStatusCode.NotFound);
+    }
+
 }
