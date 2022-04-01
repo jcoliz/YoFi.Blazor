@@ -173,7 +173,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         // When: Getting "/"
         var document = await WhenGettingIndex(new WireQueryParameters());
 
-        // And: No items returned
+        // Then: No items returned
         Assert.AreEqual(0, document.RootElement.GetProperty("items").GetArrayLength());
         var totalitems = document.RootElement.GetProperty("pageInfo").GetProperty("totalItems").GetInt32();
         Assert.AreEqual(0, totalitems);
@@ -216,7 +216,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         // When: Getting the Index for page 2
         var document = await WhenGettingIndex(new WireQueryParameters() { Page = 2 } );
 
-        // And: Only 2nd page items returned
+        // Then: Only 2nd page items returned
         ThenResultsAreEqual(document, items.Group(1));
     }
 
@@ -307,6 +307,8 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
 
         // Then: Succeeds
         response.EnsureSuccessStatusCode();
+
+        // And: Received a route
 
         // And: Now are two items in database
         Assert.AreEqual(items.Count, context.Set<Transaction>().Count());

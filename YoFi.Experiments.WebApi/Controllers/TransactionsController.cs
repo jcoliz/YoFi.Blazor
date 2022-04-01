@@ -65,10 +65,12 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(Transaction),StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
     {
         await _repository.AddAsync(transaction);
-        return Ok();
+        var requesturl = $"{Request.Scheme}://{Request.Host}{Request.Path}";
+        return Created( $"{requesturl}/{transaction.ID}", transaction);
     }
 
     [HttpPut("{id}")]
@@ -83,7 +85,7 @@ public class TransactionsController : ControllerBase
         var item = await _repository.GetByIdAsync(id);
         transaction.ID = id;
         await _repository.UpdateAsync(transaction);
-        return Ok();
+        return base. Ok();
     }
 
     [HttpGet("Download/{year}")]

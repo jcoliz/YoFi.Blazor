@@ -11,7 +11,7 @@ using YoFi.AspNet.Data;
 using YoFi.Core.Reports;
 using YoFi.Tests.Integration.Helpers;
 
-namespace YoFi.Experiments.WebApi.Tests.Tests
+namespace YoFi.Experiments.WebApi.Tests
 {
     [TestClass]
     public class ReportApiTests
