@@ -38,11 +38,13 @@ namespace YoFi.Experiments.WebApi.Controllers
         /// </summary>
         /// <param name="definition"></param>
         [HttpPost]
-        [ProducesResponseType(typeof(Report), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(WireReport), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Post([FromBody] ReportDefinition definition)
+        public IActionResult Post([FromBody] ReportParameters parameters)
         {
-            return Ok();
+            var report = _builder.Build(parameters);
+            var result = WireReport.BuildFrom(report);
+            return Ok(result);
         }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace YoFi.Experiments.WebApi.Controllers
         [HttpPost("Summary")]
         [ProducesResponseType(typeof(List<List<Report>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Summary([FromBody] ReportDefinition definition)
+        public IActionResult Summary([FromBody] ReportParameters parameters)
         {
             return Ok();
         }

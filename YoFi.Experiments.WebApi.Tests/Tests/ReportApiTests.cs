@@ -97,20 +97,25 @@ namespace YoFi.Experiments.WebApi.Tests
         }
 
         [TestMethod]
-        public async Task GetReport()
+        public async Task GetOneReport()
         {
             // When: Requesting report {name}
-            var response = await WhenSendAsync(urlroot, new ReportDefinition() { id = "all" });
+            var name = "all";
+            var response = await WhenSendAsync(urlroot, new ReportParameters() { id = name, year = 2021 });
             response.EnsureSuccessStatusCode();
 
             // Then: Expected report is returned
+            var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+            var actual = JsonSerializer.Deserialize<WireReport>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            Assert.AreEqual(name, actual.Definition);
+            Assert.AreEqual(19908.15m, actual.GrandTotal);
         }
 
         [TestMethod]
         public async Task GetSummary()
         {
             // When: Requesting summary report
-            var response = await WhenSendAsync($"{urlroot}/Summary", new ReportDefinition() );
+            var response = await WhenSendAsync($"{urlroot}/Summary", new ReportParameters() );
             response.EnsureSuccessStatusCode();
 
             // Then: Expected summary reports are returned
