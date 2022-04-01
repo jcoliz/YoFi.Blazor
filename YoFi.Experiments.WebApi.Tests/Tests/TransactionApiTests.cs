@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using YoFi.AspNet.Data;
 using YoFi.Tests.Integration.Helpers;
 using YoFi.Core.Models;
+using YoFi.Core.Repositories.Wire;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace YoFi.Experiments.WebApi.Tests;
 
@@ -42,6 +44,46 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         }
         else
             throw new System.NotImplementedException();
+    }
+
+    protected async Task<JsonDocument> WhenGetAsync(string url)
+    {
+        // When: Getting {url}
+        var response = await client.GetAsync(url);
+
+        // Then: Success
+        response.EnsureSuccessStatusCode();
+
+        // And: Response is valid JSON
+        var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
+
+        return document;
+    }
+
+    protected Task<JsonDocument> WhenGettingIndex(IWireQueryParameters parms)
+    {
+        var terms = new List<string>();
+
+        if (!string.IsNullOrEmpty(parms.Query))
+        {
+            terms.Add($"query={HttpUtility.UrlEncode(parms.Query)}");
+        }
+        if (!string.IsNullOrEmpty(parms.Order))
+        {
+            terms.Add($"order={HttpUtility.UrlEncode(parms.Order)}");
+        }
+        if (!string.IsNullOrEmpty(parms.View))
+        {
+            terms.Add($"view={HttpUtility.UrlEncode(parms.View)}");
+        }
+        if (parms.Page.HasValue)
+        {
+            terms.Add($"page={parms.Page.Value}");
+        }
+
+        var urladd = (terms.Any()) ? "?" + string.Join("&", terms) : string.Empty;
+
+        return WhenGetAsync($"{urlroot}{urladd}");
     }
 
     #endregion
@@ -81,15 +123,10 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         // Given: No data in database
 
         // When: Getting "/"
-        var response = await client.GetAsync(urlroot);
-
-        // Then: Success
-        response.EnsureSuccessStatusCode();
+        var document = await WhenGettingIndex(new WireQueryParameters());
 
         // And: No items returned
-        var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         Assert.AreEqual(0, document.RootElement.GetProperty("items").GetArrayLength());
-
         var totalitems = document.RootElement.GetProperty("pageInfo").GetProperty("totalItems").GetInt32();
         Assert.AreEqual(0, totalitems);
     }
@@ -101,13 +138,9 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         var items = FakeObjects<Transaction>.Make(7).SaveTo(this);
 
         // When: Getting "/"
-        var response = await client.GetAsync(urlroot);
-
-        // Then: Success
-        response.EnsureSuccessStatusCode();
+        var document = await WhenGettingIndex(new WireQueryParameters());
 
         // And: Expected items returned
-        var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         var actual = JsonSerializer.Deserialize<List<Transaction>>(document.RootElement.GetProperty("items"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         Assert.IsTrue(actual.SequenceEqual(items));
     }
@@ -120,13 +153,9 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         var items = FakeObjects<Transaction>.Make(pagesize).Add(pagesize / 2).SaveTo(this);
 
         // When: Getting the Index for page 2
-        var response = await client.GetAsync(urlroot + "?page=2");
-
-        // Then: Success
-        response.EnsureSuccessStatusCode();
+        var document = await WhenGettingIndex(new WireQueryParameters() { Page = 2 } );
 
         // And: Only 2nd page items returned
-        var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
         var actual = JsonSerializer.Deserialize<List<Transaction>>(document.RootElement.GetProperty("items"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         Assert.IsTrue(actual.SequenceEqual(items.Group(1)));
     }
