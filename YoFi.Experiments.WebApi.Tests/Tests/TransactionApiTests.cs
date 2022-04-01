@@ -27,7 +27,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
     protected static HttpClient client => integrationcontext.client;
     protected static ApplicationDbContext context => integrationcontext.context;
 
-    protected string urlroot => "/Transactions/";
+    protected string urlroot => "/Transactions";
 
     #endregion
 
@@ -89,7 +89,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
 
         var urladd = (terms.Any()) ? "?" + string.Join("&", terms) : string.Empty;
 
-        return WhenGetAsync($"{urlroot}{urladd}");
+        return WhenGetAsync($"{urlroot}/{urladd}");
     }
 
     protected async Task<HttpResponseMessage> WhenSendAsync<T>(string url, T item, HttpMethod method = null)
@@ -226,7 +226,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         var id = expected.ID;
 
         // When: Getting details for the chosen item
-        var document = await WhenGetAsync($"{urlroot}{id}");
+        var document = await WhenGetAsync($"{urlroot}/{id}");
 
         // Then: That item is shown
         var actual = JsonSerializer.Deserialize<Transaction>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
@@ -242,7 +242,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         // When: Getting details for an ID which is not in the set
         // Then: Not Found
         var id = items.Max(x=>x.ID) + 1;
-        await WhenGetAsync($"{urlroot}{id}",HttpStatusCode.NotFound);
+        await WhenGetAsync($"{urlroot}/{id}",HttpStatusCode.NotFound);
     }
 
     [TestMethod]
@@ -254,7 +254,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         var newvalues = data.Group(1).Single();
 
         // When: Editing the chosen item with the new values
-        var response = await WhenSendAsync($"{urlroot}{id}", newvalues, HttpMethod.Put);
+        var response = await WhenSendAsync($"{urlroot}/{id}", newvalues, HttpMethod.Put);
 
         // Then: Succeeds
         response.EnsureSuccessStatusCode();
@@ -273,7 +273,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
 
         // When: Editing an ID which doesn't exist the new values
         var id = data.Group(0).Max(x => x.ID) + 1;
-        var response = await WhenSendAsync($"{urlroot}{id}", newvalues, HttpMethod.Put);
+        var response = await WhenSendAsync($"{urlroot}/{id}", newvalues, HttpMethod.Put);
 
         // Then: NotFound
         Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
