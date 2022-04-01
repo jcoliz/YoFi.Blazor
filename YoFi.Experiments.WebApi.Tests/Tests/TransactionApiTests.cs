@@ -138,7 +138,7 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
     }
 
     [TestMethod]
-    public async Task GetEmpty()
+    public async Task IndexEmpty()
     {
         // Given: No data in database
 
@@ -152,10 +152,10 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
     }
 
     [TestMethod]
-    public async Task GetSome()
+    public async Task IndexSingle()
     {
-        // Given: Some items in database
-        var items = FakeObjects<Transaction>.Make(7).SaveTo(this);
+        // Given: One item in database
+        var items = FakeObjects<Transaction>.Make(1).SaveTo(this);
 
         // When: Getting "/"
         var document = await WhenGettingIndex(new WireQueryParameters());
@@ -165,7 +165,22 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
     }
 
     [TestMethod]
-    public async Task GetPage2()
+    public async Task IndexPage1()
+    {
+        // Given: A long set of items, which is longer than one page, but not as long as two pages 
+        var pagesize = 25; // BaseRepository<T>.DefaultPageSize;
+        var items = FakeObjects<Transaction>.Make(pagesize).Add(pagesize / 2).SaveTo(this);
+
+        // When: Getting the Index
+        var document = await WhenGettingIndex(new WireQueryParameters());
+
+        // Then: Only one page of items returned, which are the LAST group, cuz it's sorted by time
+        ThenResultsAreEqual(document, items.Group(0));
+    }
+
+
+    [TestMethod]
+    public async Task IndexPage2()
     {
         // Given: A long set of items, which is longer than one page, but not as long as two pages 
         var pagesize = 25; // BaseRepository<BudgetTx>.DefaultPageSize;
