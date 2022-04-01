@@ -15,6 +15,7 @@ using System.Net;
 using System;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using jcoliz.OfficeOpenXml.Serializer;
 
 namespace YoFi.Experiments.WebApi.Tests;
 
@@ -106,6 +107,21 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         // Then: The expected items are returned
         var actual = JsonSerializer.Deserialize<List<T>>(document.RootElement.GetProperty("items"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         Assert.IsTrue(actual.SequenceEqual(items));
+    }
+
+    protected async Task ThenIsSpreadsheetContaining<T>(HttpContent content, IEnumerable<T> items) where T : class, new()
+    {
+        // Then: It's a stream
+        Assert.IsInstanceOfType(content, typeof(StreamContent));
+        var streamcontent = content as StreamContent;
+
+        // And: The stream contains a spreadsheet
+        using var ssr = new SpreadsheetReader();
+        ssr.Open(await streamcontent.ReadAsStreamAsync());
+
+        // And: The spreadsheet contains all our items
+        var actual = ssr.Deserialize<T>();
+        Assert.IsTrue(items.SequenceEqual(actual));
     }
 
     #endregion
@@ -333,5 +349,21 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
 
         // Then: NotFound
         Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [TestMethod]
+    public virtual async Task Download()
+    {
+        // Given: Many items in the database
+        var items = FakeObjects<Transaction>.Make(20).SaveTo(this);
+
+        // When: Downloading them
+        var response = await client.GetAsync($"{urlroot}/Download/2000?allyears=true");
+
+        // Then: Response is OK
+        response.EnsureSuccessStatusCode();
+
+        // And: It's a spreadsheet containing our items
+        await ThenIsSpreadsheetContaining(response.Content, items);
     }
 }

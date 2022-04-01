@@ -65,9 +65,11 @@ public class MockDataContext : IDataContext
         if (typeof(TEntity) == typeof(Transaction))
         {
             int id = 1;
-            return FakeObjects<Transaction>.Make(10,x=>x.ID = id++).AsQueryable() as IQueryable<TEntity> ?? Enumerable.Empty<TEntity>().AsQueryable();
+            var items = FakeObjects<Transaction>.Make(10, x => x.ID = id++).AsQueryable();
+            var result = items as IQueryable<TEntity>;
+            return result;
         }
-        throw new NotImplementedException();
+        else return Enumerable.Empty<TEntity>().AsQueryable();
     }
 
     public void Remove(object item)

@@ -1,4 +1,6 @@
+using Common.DotNet;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using YoFi.Core.Models;
 using YoFi.Core.Repositories;
 using YoFi.Core.Repositories.Wire;
@@ -18,14 +20,17 @@ public class TransactionsController : ControllerBase
 {
     private readonly ILogger<WeatherForecastController> _logger;
     private readonly ITransactionRepository _repository;
+    private readonly IClock _clock;
 
-    public TransactionsController(ILogger<WeatherForecastController> logger, ITransactionRepository repository)
+    public TransactionsController(ILogger<WeatherForecastController> logger, ITransactionRepository repository, IClock clock)
     {
         _logger = logger;
         _repository = repository;
+        _clock = clock;
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(WireQueryResult<Transaction>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get([FromQuery] WireQueryParameters parameters)
     {
         var result = await _repository.GetByQueryAsync(parameters);
@@ -33,6 +38,7 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(Transaction), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get(int id)
     {
         // TODO: Use a filter
@@ -59,7 +65,7 @@ public class TransactionsController : ControllerBase
     public async Task<IActionResult> Create([Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
     {
         await _repository.AddAsync(transaction);
-        return Ok(transaction.ID);
+        return Ok();
     }
 
     [HttpPut("{id}")]
@@ -73,5 +79,16 @@ public class TransactionsController : ControllerBase
         transaction.ID = id;
         await _repository.UpdateAsync(transaction);
         return Ok();
+    }
+
+    [HttpGet("Download/{year}")]
+    [Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",Type = typeof(FileStreamResult))]
+    public async Task<IActionResult> Download(int year, bool allyears, string query)
+    {
+        var stream = await _repository.AsSpreadsheetAsync(year, true, query);
+
+        IActionResult file = File(stream, contentType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileDownloadName: "Transactions.xlsx");
+
+        return file;
     }
 }
