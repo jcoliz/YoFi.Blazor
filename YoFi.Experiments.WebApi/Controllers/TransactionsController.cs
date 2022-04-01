@@ -7,6 +7,7 @@ namespace YoFi.Experiments.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Produces("application/json")]
 public class TransactionsController : ControllerBase
 {
     private readonly ILogger<WeatherForecastController> _logger;
@@ -19,37 +20,40 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IWireQueryResult<Transaction>> Get([FromQuery] WireQueryParameters parameters)
+    public async Task<IActionResult> Get([FromQuery] WireQueryParameters parameters)
     {
-        return await _repository.GetByQueryAsync(parameters);
+        var result = await _repository.GetByQueryAsync(parameters);
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public async Task<Transaction> Get(int id)
+    public async Task<IActionResult> Get(int id)
     {
-        return await _repository.GetByIdAsync(id);
+        var result = await _repository.GetByIdAsync(id);
+        return Ok(result);
     }
 
     [HttpDelete("{id}")]
-    public async Task Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
         var item = await _repository.GetByIdAsync(id);
         await _repository.RemoveAsync(item);
+        return Ok();
     }
 
     [HttpPost]
-    public async Task<int> Create([Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
+    public async Task<IActionResult> Create([Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
     {
         await _repository.AddAsync(transaction);
-        return transaction.ID;
+        return Ok(transaction.ID);
     }
 
     [HttpPut("{id}")]
-    public async Task Edit(int id, [Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
+    public async Task<IActionResult> Edit(int id, [Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
     {
         var item = await _repository.GetByIdAsync(id);
         transaction.ID = id;
         await _repository.UpdateAsync(transaction);
+        return Ok();
     }
-
 }
