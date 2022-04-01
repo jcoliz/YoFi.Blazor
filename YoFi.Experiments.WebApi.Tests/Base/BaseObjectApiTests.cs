@@ -17,20 +17,9 @@ using YoFi.Core.Repositories.Wire;
 namespace YoFi.Experiments.WebApi.Tests
 {
     [TestClass]
-    public abstract class BaseObjectApiTests<T>: BaseApiTests, IFakeObjectsSaveTarget where T : class, IID, new()
+    public abstract class BaseObjectApiTests<T>: BaseApiTests where T : class, IID, new()
     {
         #region Helpers
-
-        public void AddRange(IEnumerable objects)
-        {
-            if (objects is IEnumerable<Transaction> txs)
-            {
-                context.AddRange(txs);
-                context.SaveChanges();
-            }
-            else
-                throw new System.NotImplementedException();
-        }
 
         protected Task<JsonDocument> WhenGettingIndex(IWireQueryParameters parms)
         {

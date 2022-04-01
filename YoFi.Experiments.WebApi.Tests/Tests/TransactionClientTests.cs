@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using jcoliz.FakeObjects;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,22 @@ namespace YoFi.Experiments.WebApi.Tests.Tests
             Assert.AreEqual(0, response.Items.Count);
             Assert.AreEqual(0, response.PageInfo.TotalItems);
         }
+
+        [TestMethod]
+        public async Task IndexSingle()
+        {
+            // Given: One item in database
+            var items = FakeObjects<Core.Models.Transaction>.Make(1).SaveTo(this);
+
+            // When: Getting "/"
+            var response = await webapiclient.TransactionsAsync(null, null, null, null, null);
+
+            // And: Expected items returned
+            Assert.AreEqual(1, response.Items.Count);
+            Assert.AreEqual(1, response.PageInfo.TotalItems);
+            Assert.AreEqual(items.Single().Memo, response.Items.First().Memo);
+        }
+
         #endregion
     }
 }
