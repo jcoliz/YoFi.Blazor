@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\YoFi.Experiments.WebApi.Client\YoFi.Experiments.WebApi.Client.csproj" />
     <ProjectReference Include="..\YoFi.Experiments.WebApi\YoFi.Experiments.WebApi.csproj" />
   </ItemGroup>
 

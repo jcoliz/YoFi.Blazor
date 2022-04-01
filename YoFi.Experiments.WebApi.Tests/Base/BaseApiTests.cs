@@ -10,22 +10,12 @@ using YoFi.Tests.Integration.Helpers;
 namespace YoFi.Experiments.WebApi.Tests
 {
     [TestClass]
-    public abstract class BaseApiTests
+    public abstract class BaseApiTests: IntegrationTests
     {
         #region Fields
 
-        protected static IntegrationContext integrationcontext;
-        protected static HttpClient client => integrationcontext.client;
-        protected static ApplicationDbContext context => integrationcontext.context;
         protected static SampleDataStore data;
-
         protected abstract string urlroot { get; set; }
-
-        #endregion
-
-        #region Properties
-
-        public TestContext TestContext { get; set; }
 
         #endregion
 
