@@ -30,7 +30,7 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(WireQueryResult<Transaction>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(WireQueryResult<Transaction>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get([FromQuery] WireQueryParameters parameters)
     {
         var result = await _repository.GetByQueryAsync(parameters);
@@ -38,7 +38,8 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(Transaction), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(Transaction), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(int id)
     {
         // TODO: Use a filter
@@ -50,6 +51,8 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
     {
         // TODO: Use a filter
@@ -69,6 +72,8 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Edit(int id, [Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
     {
         // TODO: Use a filter
@@ -82,7 +87,8 @@ public class TransactionsController : ControllerBase
     }
 
     [HttpGet("Download/{year}")]
-    [Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",Type = typeof(FileStreamResult))]
+    [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")]
+    [Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Type = typeof(FileStream))]
     public async Task<IActionResult> Download(int year, bool allyears, string query)
     {
         var stream = await _repository.AsSpreadsheetAsync(year, true, query);
