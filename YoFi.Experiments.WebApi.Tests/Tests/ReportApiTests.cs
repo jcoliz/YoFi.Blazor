@@ -65,7 +65,7 @@ namespace YoFi.Experiments.WebApi.Tests
         {
             // When: Requesting report {name}
             var name = "all";
-            var response = await WhenSendAsync(urlroot, new ReportParameters() { id = name, year = sampledatayear });
+            var response = await WhenSendAsync(urlroot, new ReportParameters() { slug = name, year = sampledatayear });
             response.EnsureSuccessStatusCode();
 
             // Then: Expected report is returned
@@ -81,20 +81,20 @@ namespace YoFi.Experiments.WebApi.Tests
             // Given: The list of all report definitions
             var document = await WhenGetAsync(urlroot);
             var definitions = JsonSerializer.Deserialize<List<ReportDefinition>>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-            var shortnames = definitions.Select(x => x.id);
+            var slugs = definitions.Select(x => x.slug);
 
-            foreach(var name in shortnames)
+            foreach(var slug in slugs)
             {
                 // When: Requesting each report {name}
-                var response = await WhenSendAsync(urlroot, new ReportParameters() { id = name, year = sampledatayear });
+                var response = await WhenSendAsync(urlroot, new ReportParameters() { slug = slug, year = sampledatayear });
 
                 // Then: OK
-                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, name);
+                Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, slug);
 
                 // And: Expected report is returned
                 document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
                 var actual = JsonSerializer.Deserialize<WireReport>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-                Assert.AreEqual(name, actual.Definition);
+                Assert.AreEqual(slug, actual.Definition);
             }
         }
 
@@ -103,7 +103,7 @@ namespace YoFi.Experiments.WebApi.Tests
         {
             // When: Requesting report {name} where it won't be found
             var name = "bogus";
-            var response = await WhenSendAsync(urlroot, new ReportParameters() { id = name, year = sampledatayear });
+            var response = await WhenSendAsync(urlroot, new ReportParameters() { slug = name, year = sampledatayear });
 
             // Then: Not Found
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);

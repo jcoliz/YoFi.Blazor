@@ -624,7 +624,7 @@
       "ReportDefinition": {
         "type": "object",
         "properties": {
-          "id": {
+          "slug": {
             "type": "string",
             "nullable": true
           },
@@ -685,7 +685,7 @@
       "ReportParameters": {
         "type": "object",
         "properties": {
-          "id": {
+          "slug": {
             "type": "string",
             "nullable": true
           },
