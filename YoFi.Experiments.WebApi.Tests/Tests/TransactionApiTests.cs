@@ -111,4 +111,14 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
         var actual = JsonSerializer.Deserialize<List<Transaction>>(document.RootElement.GetProperty("items"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         Assert.IsTrue(actual.SequenceEqual(items));
     }
+
+    [TestMethod]
+    public async Task GetSwagger()
+    {
+        // When: Getting the swagger file
+        var response = await client.GetAsync("/swagger/v1/swagger.json");
+
+        // Then: Success
+        response.EnsureSuccessStatusCode();
+    }
 }
