@@ -50,35 +50,6 @@ public class TransactionApiTests: IFakeObjectsSaveTarget
             throw new System.NotImplementedException();
     }
 
-    protected Dictionary<string, string> FormDataFromObject<T>(T item)
-    {
-        var result = new Dictionary<string, string>();
-
-        var properties = typeof(T).GetProperties();
-        var chosen = properties.Where(x => x.CustomAttributes.Any(y => y.AttributeType == typeof(System.ComponentModel.DataAnnotations.EditableAttribute)));
-
-        foreach (var property in chosen)
-        {
-            var t = property.PropertyType;
-            object o = property.GetValue(item);
-            string s = string.Empty;
-
-            if (t == typeof(string))
-                s = (string)o;
-            else if (t == typeof(decimal))
-                s = ((decimal)o).ToString();
-            else if (t == typeof(DateTime))
-                s = ((DateTime)o).ToString("MM/dd/yyyy");
-            else
-                throw new NotImplementedException();
-
-            result[property.Name] = s;
-        }
-
-        return result;
-    }
-
-
     protected async Task<JsonDocument> WhenGetAsync(string url, HttpStatusCode expectedresult = HttpStatusCode.OK)
     {
         // When: Getting {url}
