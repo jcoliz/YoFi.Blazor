@@ -23,8 +23,15 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(c =>
+    {
+        c.RouteTemplate = "/swagger/{documentName}/yofi.wireapi.swagger.json";
+    });
+
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/yofi.wireapi.swagger.json", "v1");
+    });
 }
 
 app.UseHttpsRedirection();
