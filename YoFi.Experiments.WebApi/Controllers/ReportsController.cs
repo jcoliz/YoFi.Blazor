@@ -27,7 +27,7 @@ namespace YoFi.Experiments.WebApi.Controllers
         /// <summary>
         /// Returns the report definitions
         /// </summary>
-        [HttpGet]
+        [HttpGet(Name = "ListReports")]
         [ProducesResponseType(typeof(List<ReportDefinition>), StatusCodes.Status200OK)]
         public IActionResult Get()
         {
@@ -39,7 +39,7 @@ namespace YoFi.Experiments.WebApi.Controllers
         /// Generates a report for a specific definition
         /// </summary>
         /// <param name="parameters"></param>
-        [HttpPost]
+        [HttpPost(Name = "BuildReport")]
         [ProducesResponseType(typeof(WireReport), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Post(ReportParameters parameters)
@@ -60,7 +60,7 @@ namespace YoFi.Experiments.WebApi.Controllers
         /// Generates the summary reports
         /// </summary>
         /// <param name="parameters"></param>
-        [HttpPost("Summary")]
+        [HttpPost("Summary", Name = "BuildSummaryReport")]
         [ProducesResponseType(typeof(List<List<WireReport>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Summary(ReportParameters parameters)

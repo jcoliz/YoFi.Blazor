@@ -10,6 +10,7 @@
         "tags": [
           "Reports"
         ],
+        "operationId": "ListReports",
         "responses": {
           "200": {
             "description": "Success",
@@ -30,6 +31,7 @@
         "tags": [
           "Reports"
         ],
+        "operationId": "BuildReport",
         "requestBody": {
           "content": {
             "application/json": {
@@ -78,6 +80,7 @@
         "tags": [
           "Reports"
         ],
+        "operationId": "BuildSummaryReport",
         "requestBody": {
           "content": {
             "application/json": {
