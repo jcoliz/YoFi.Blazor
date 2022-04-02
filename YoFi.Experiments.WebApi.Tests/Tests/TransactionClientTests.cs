@@ -59,7 +59,7 @@ namespace YoFi.Experiments.WebApi.Tests.Tests
             // Given: No data in database
 
             // When: Getting "/"
-            var response = await webapiclient.TransactionsAsync(null,null,null,null,null);
+            var response = await webapiclient.ListTransactionsAsync(null,null,null,null,null);
 
             // Then: No items returned
             Assert.AreEqual(0, response.Items.Count);
@@ -73,7 +73,7 @@ namespace YoFi.Experiments.WebApi.Tests.Tests
             var items = FakeObjects<Core.Models.Transaction>.Make(1).SaveTo(this);
 
             // When: Getting "/"
-            var response = await webapiclient.TransactionsAsync(null, null, null, null, null);
+            var response = await webapiclient.ListTransactionsAsync(null, null, null, null, null);
 
             // And: Expected items returned
             Assert.AreEqual(1, response.Items.Count);
@@ -89,7 +89,7 @@ namespace YoFi.Experiments.WebApi.Tests.Tests
             var items = FakeObjects<Core.Models.Transaction>.Make(pagesize).Add(pagesize / 2).SaveTo(this);
 
             // When: Getting "/"
-            var response = await webapiclient.TransactionsAsync(null, null, null, null, null);
+            var response = await webapiclient.ListTransactionsAsync(null, null, null, null, null);
 
             // Then: Only first page of items returned
             Assert.AreEqual(items.Group(0).Count, response.Items.Count);
@@ -105,7 +105,7 @@ namespace YoFi.Experiments.WebApi.Tests.Tests
             var items = FakeObjects<Core.Models.Transaction>.Make(pagesize).Add(pagesize / 2).SaveTo(this);
 
             // When: Getting the Index for page 2
-            var response = await webapiclient.TransactionsAsync(null, 2, null, null, null);
+            var response = await webapiclient.ListTransactionsAsync(null, 2, null, null, null);
 
             // Then: Only 2nd page items returned
             Assert.AreEqual(items.Group(1).Count, response.Items.Count);
@@ -121,7 +121,7 @@ namespace YoFi.Experiments.WebApi.Tests.Tests
 
             // When: Searching the index for the focused item's testkey
             var q = chosen.Single().Memo;
-            var response = await webapiclient.TransactionsAsync(q, null, null, null, null);
+            var response = await webapiclient.ListTransactionsAsync(q, null, null, null, null);
 
             // Then: The expected items are returned
             Assert.AreEqual(1, response.Items.Count);

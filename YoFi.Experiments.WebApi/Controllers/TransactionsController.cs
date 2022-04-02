@@ -29,7 +29,7 @@ public class TransactionsController : ControllerBase
         _clock = clock;
     }
 
-    [HttpGet]
+    [HttpGet(Name = "ListTransactions")]
     [ProducesResponseType(typeof(WireQueryResult<Transaction>), StatusCodes.Status200OK)]
     public async Task<IActionResult> Get([FromQuery] WireQueryParameters parameters)
     {
@@ -37,7 +37,7 @@ public class TransactionsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}", Name = "GetTransaction")]
     [ProducesResponseType(typeof(Transaction), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(int id)
@@ -50,7 +50,7 @@ public class TransactionsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id}", Name = "DeleteTransaction")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
@@ -64,7 +64,7 @@ public class TransactionsController : ControllerBase
         return Ok();
     }
 
-    [HttpPost]
+    [HttpPost(Name = "CreateTransaction")]
     [ProducesResponseType(typeof(Transaction),StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
     {
@@ -73,7 +73,7 @@ public class TransactionsController : ControllerBase
         return Created( $"{requesturl}/{transaction.ID}", transaction);
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("{id}", Name = "UpdateTransaction")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Edit(int id, [Bind("Timestamp,Amount,Memo,Payee,Category,BankReference")] Transaction transaction )
@@ -88,7 +88,7 @@ public class TransactionsController : ControllerBase
         return base. Ok();
     }
 
-    [HttpGet("Download/{year}")]
+    [HttpGet("Download/{year}", Name = "DownloadTransactions")]
     [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")]
     [Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Type = typeof(FileStream))]
     public async Task<IActionResult> Download(int year, bool allyears, string query)

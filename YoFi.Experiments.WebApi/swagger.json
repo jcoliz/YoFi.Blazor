@@ -132,6 +132,7 @@
         "tags": [
           "Transactions"
         ],
+        "operationId": "ListTransactions",
         "parameters": [
           {
             "name": "Query",
@@ -187,6 +188,7 @@
         "tags": [
           "Transactions"
         ],
+        "operationId": "CreateTransaction",
         "requestBody": {
           "content": {
             "application/json": {
@@ -225,6 +227,7 @@
         "tags": [
           "Transactions"
         ],
+        "operationId": "GetTransaction",
         "parameters": [
           {
             "name": "id",
@@ -263,6 +266,7 @@
         "tags": [
           "Transactions"
         ],
+        "operationId": "DeleteTransaction",
         "parameters": [
           {
             "name": "id",
@@ -294,6 +298,7 @@
         "tags": [
           "Transactions"
         ],
+        "operationId": "UpdateTransaction",
         "parameters": [
           {
             "name": "id",
@@ -346,6 +351,7 @@
         "tags": [
           "Transactions"
         ],
+        "operationId": "DownloadTransactions",
         "parameters": [
           {
             "name": "year",
