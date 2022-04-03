@@ -7,7 +7,7 @@ using YoFi.Core.Models;
 using YoFi.Core.Repositories;
 using YoFi.Core.Repositories.Wire;
 
-namespace YoFi.Experiments.WebApi.Controllers;
+namespace YoFi.WireApi.Controllers;
 
 /// <summary>
 /// Super thin API controller for Transaction Repository

@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "YoFi.Experiments.WebApi": {
+    "YoFi.WireApi.Host": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

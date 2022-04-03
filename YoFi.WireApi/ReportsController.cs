@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Net;
 using YoFi.Core.Reports;
 
-namespace YoFi.Experiments.WebApi.Controllers
+namespace YoFi.WireApi.Controllers
 {
     /// <summary>
     /// Exposes an IReportEngine to the network
