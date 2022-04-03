@@ -61,6 +61,18 @@ namespace YoFi.WireApi.Tests.Tests
         }
 
         [TestMethod]
+        public async Task GetOneReport()
+        {
+            // When: Requesting report {name}
+            var name = "all";
+            var result = await wireapi.BuildReportAsync(new Client.ReportParameters() { Slug = name, Year = sampledatayear });
+
+            // Then: Expected report is returned
+            Assert.AreEqual(name, result.Definition);
+            Assert.AreEqual(19908.15m, (decimal)result.GrandTotal);
+        }
+
+        [TestMethod]
         public async Task GetReportNotFound()
         {
             try
