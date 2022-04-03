@@ -27,7 +27,11 @@ namespace YoFi.WireApi.Tests
         {
             integrationcontext = new IntegrationContext(tcontext.FullyQualifiedTestClassName);
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Core.Models.Transaction, Client.Transaction>());
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<Core.Models.Transaction, Client.Transaction>();
+                cfg.CreateMap<Client.Transaction, Core.Models.Transaction>();
+                cfg.CreateMap<DateTimeOffset, DateTime>().ConstructUsing(x => x.LocalDateTime);
+            });
             mapper = config.CreateMapper();
         }
 
@@ -85,7 +89,9 @@ namespace YoFi.WireApi.Tests
             // And: Expected items returned
             Assert.AreEqual(1, response.Items.Count);
             Assert.AreEqual(1, response.PageInfo.TotalItems);
-            Assert.AreEqual(items.Single().Memo, response.Items.First().Memo);
+
+            var mapped = mapper.Map<Core.Models.Transaction>(response.Items.Single());
+            Assert.AreEqual(items.Single(), mapped);
         }
 
         [TestMethod]
@@ -132,7 +138,9 @@ namespace YoFi.WireApi.Tests
 
             // Then: The expected items are returned
             Assert.AreEqual(1, response.Items.Count);
-            Assert.AreEqual(chosen.Single().Payee, response.Items.Single().Payee);
+
+            var mapped = mapper.Map<Core.Models.Transaction>(response.Items.Single());
+            Assert.AreEqual(chosen.Single(), mapped);
         }
 
         [TestMethod]
@@ -146,7 +154,8 @@ namespace YoFi.WireApi.Tests
             var actual = await wireapi.GetTransactionAsync(id);
 
             // Then: That item is shown
-            Assert.AreEqual(expected.Memo, actual.Memo);
+            var mapped = mapper.Map<Core.Models.Transaction>(actual);
+            Assert.AreEqual(expected, mapped);
         }
 
         [TestMethod]
@@ -180,7 +189,6 @@ namespace YoFi.WireApi.Tests
             var expected = items.Last();
 
             // When: Creating a new item
-            // TODO: Need extension method to create a client transaction from a model transaction
             var response = await wireapi.CreateTransactionAsync(mapper.Map<Client.Transaction>(expected));
 
             // Then: Now are two items in database
@@ -188,8 +196,7 @@ namespace YoFi.WireApi.Tests
 
             // And: The last one is the one we just added
             var actual = context.Set<Core.Models.Transaction>().OrderBy(x => x.ID).AsNoTracking().Last();
-            // TODO: Need extension method to compare a client transaction to a model transaction
-            Assert.AreEqual(expected.Payee, actual.Payee);
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
