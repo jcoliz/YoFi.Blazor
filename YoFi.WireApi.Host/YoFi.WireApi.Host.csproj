@@ -6,6 +6,11 @@
 	<OpenApiGenerateDocumentsOnBuild>true</OpenApiGenerateDocumentsOnBuild>
   </PropertyGroup>
 
+	<!--	
+	NOTE: OpenApiGenerateDocumentsOnBuild can only be done here, not in the class library. Sad!	
+	https://github.com/dotnet/aspnetcore/issues/14370	
+	-->
+	
   <ItemGroup>
     <PackageReference Include="jcoliz.FakeObjects" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="6.0.3">
