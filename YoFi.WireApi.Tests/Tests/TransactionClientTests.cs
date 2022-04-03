@@ -1,4 +1,5 @@
 ﻿using jcoliz.FakeObjects;
+using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
@@ -126,6 +127,43 @@ namespace YoFi.WireApi.Tests
             // Then: The expected items are returned
             Assert.AreEqual(1, response.Items.Count);
             Assert.AreEqual(chosen.Single().Payee, response.Items.Single().Payee);
+        }
+
+        [TestMethod]
+        public async Task Details()
+        {
+            // Given: There are 5 items in the database, one of which we care about
+            var expected = FakeObjects<Core.Models.Transaction>.Make(5).SaveTo(this).Last();
+            var id = expected.ID;
+
+            // When: Getting details for the chosen item
+            var actual = await wireapi.GetTransactionAsync(id);
+
+            // Then: That item is shown
+            Assert.AreEqual(expected.Memo, actual.Memo);
+        }
+
+        [TestMethod]
+        public async Task DetailsNotFound()
+        {
+            // Given: There are 5 items in the database
+            var items = FakeObjects<Core.Models.Transaction>.Make(5).SaveTo(this);
+
+            try
+            {
+                // When: Getting details for an ID which is not in the set
+                var id = items.Max(x => x.ID) + 1;
+                var actual = await wireapi.GetTransactionAsync(id);
+            }
+            catch (Client.ApiException<Client.ProblemDetails> ex)
+            {
+                // Then: Not Found
+                Assert.AreEqual(StatusCodes.Status404NotFound, ex.StatusCode);
+            }
+            catch
+            {
+                throw new Exception("Unexpected exception type");
+            }
         }
 
         #endregion
