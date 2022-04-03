@@ -7,8 +7,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using YoFi.AspNet.Data;
 using YoFi.Core.Models;
+using YoFi.Experiments.WebApi.Data;
 using YoFi.Tests.Integration.Helpers;
 
 namespace YoFi.Experiments.WebApi.Tests

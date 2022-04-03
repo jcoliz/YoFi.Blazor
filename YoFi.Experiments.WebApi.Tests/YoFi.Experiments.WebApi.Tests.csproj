@@ -31,4 +31,8 @@
     <ProjectReference Include="..\YoFi.Experiments.WebApi\YoFi.Experiments.WebApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

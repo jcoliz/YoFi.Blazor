@@ -9,8 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using YoFi.AspNet.Data;
 using YoFi.Core;
+using YoFi.Experiments.WebApi.Data;
 
 namespace YoFi.Tests.Integration.Helpers
 {

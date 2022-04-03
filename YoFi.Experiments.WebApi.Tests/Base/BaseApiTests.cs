@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using YoFi.AspNet.Data;
 using YoFi.Tests.Integration.Helpers;
 
 namespace YoFi.Experiments.WebApi.Tests

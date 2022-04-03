@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using YoFi.AspNet.Data;
 using YoFi.Core;
+using YoFi.Experiments.WebApi.Data;
 
 namespace YoFi.Tests.Integration.Helpers
 {
