@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using YoFi.Core;
 using YoFi.Core.Models;
 
-namespace YoFi.Experiments.WebApi.Data
+namespace YoFi.WireApi.Host.Data
 {
     public class ApplicationDbContext : DbContext, IDataContext
     {

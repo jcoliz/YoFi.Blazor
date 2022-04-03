@@ -1,14 +1,11 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System.Linq;
 using YoFi.Core;
-using YoFi.Experiments.WebApi.Data;
+using YoFi.WireApi.Host.Data;
 
 namespace YoFi.Tests.Integration.Helpers
 {

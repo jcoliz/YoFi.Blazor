@@ -1,16 +1,9 @@
 using Common.DotNet;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
-using YoFi.Core;
-using YoFi.Experiments.WebApi.Data;
+using YoFi.WireApi.Host.Data;
 
 namespace YoFi.Tests.Integration.Helpers
 {

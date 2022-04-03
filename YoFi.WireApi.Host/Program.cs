@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using YoFi.Core;
 using YoFi.Core.Reports;
 using YoFi.Core.Repositories;
-using YoFi.Experiments.WebApi.Data;
+using YoFi.WireApi.Host.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

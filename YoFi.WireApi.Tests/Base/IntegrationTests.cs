@@ -1,15 +1,11 @@
 ﻿using jcoliz.FakeObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using YoFi.Core.Models;
-using YoFi.Experiments.WebApi.Data;
 using YoFi.Tests.Integration.Helpers;
+using YoFi.WireApi.Host.Data;
 
 namespace YoFi.WireApi.Tests
 {
