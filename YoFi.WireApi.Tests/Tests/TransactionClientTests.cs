@@ -1,5 +1,6 @@
 ﻿using jcoliz.FakeObjects;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
@@ -154,6 +155,67 @@ namespace YoFi.WireApi.Tests
                 // When: Getting details for an ID which is not in the set
                 var id = items.Max(x => x.ID) + 1;
                 var actual = await wireapi.GetTransactionAsync(id);
+            }
+            catch (Client.ApiException<Client.ProblemDetails> ex)
+            {
+                // Then: Not Found
+                Assert.AreEqual(StatusCodes.Status404NotFound, ex.StatusCode);
+            }
+            catch
+            {
+                throw new Exception("Unexpected exception type");
+            }
+        }
+
+        [TestMethod]
+        public async Task Create()
+        {
+            // Given: There is one item in the database, and another one waiting to be created
+            var items = FakeObjects<Core.Models.Transaction>.Make(1).SaveTo(this).Add(1);
+            var expected = items.Last();
+
+            // When: Creating a new item
+            // TODO: Need extension method to create a client transaction from a model transaction
+            var response = await wireapi.CreateTransactionAsync(new Client.Transaction() { Timestamp = expected.Timestamp, Payee = expected.Payee, Amount = (double)expected.Amount, Memo = expected.Memo });
+
+            // Then: Now are two items in database
+            Assert.AreEqual(items.Count, context.Set<Core.Models.Transaction>().Count());
+
+            // And: The last one is the one we just added
+            var actual = context.Set<Core.Models.Transaction>().OrderBy(x => x.ID).AsNoTracking().Last();
+            // TODO: Need extension method to compare a client transaction to a model transaction
+            Assert.AreEqual(expected.Payee, actual.Payee);
+        }
+
+        [TestMethod]
+        public async Task Delete()
+        {
+            // Given: There are two items in the database, one of which we care about
+            var items = FakeObjects<Core.Models.Transaction>.Make(5).Add(1).SaveTo(this);
+            var id = items.Group(1).Single().ID;
+
+            // When: Deleting the selected item
+            await wireapi.DeleteTransactionAsync(id);
+
+            // Then: Now is only first group of items in database
+            Assert.AreEqual(items.Group(0).Count, context.Set<Core.Models.Transaction>().Count());
+
+            // And: The deleted item cannot be found;
+            Assert.IsFalse(context.Set<Core.Models.Transaction>().Any(x => x.ID == id));
+        }
+
+        [TestMethod]
+        public async Task DeleteNotFound()
+        {
+            // Given: There are 5 items in the database
+            var data = FakeObjects<Core.Models.Transaction>.Make(4).SaveTo(this).Add(1);
+            var newvalues = data.Group(1).Single();
+
+            try
+            {
+                // When: Deleting an ID which doesn't exist
+                var id = data.Group(0).Max(x => x.ID) + 1;
+                await wireapi.DeleteTransactionAsync(id);
             }
             catch (Client.ApiException<Client.ProblemDetails> ex)
             {
