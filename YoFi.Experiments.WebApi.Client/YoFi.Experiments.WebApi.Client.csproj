@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="..\YoFi.Experiments.WebApi\yofi.wireapi.swagger.json" CodeGenerator="NSwagCSharp" Namespace="YoFi.WireApi.Client" ClassName="WireApiClient" Link="OpenAPIs\yofi.wireapi.swagger.json" />
+    <OpenApiReference Include="..\YoFi.WireApi.Host\yofi.wireapi.swagger.json" CodeGenerator="NSwagCSharp" Namespace="YoFi.WireApi.Client" ClassName="WireApiClient" Link="OpenAPIs\yofi.wireapi.swagger.json" />
   </ItemGroup>
 
   <ItemGroup>
