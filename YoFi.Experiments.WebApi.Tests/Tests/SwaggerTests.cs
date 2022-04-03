@@ -29,7 +29,7 @@ namespace YoFi.Experiments.WebApi.Tests
         public async Task GetSwagger()
         {
             // When: Getting the swagger file
-            var response = await client.GetAsync("/swagger/v1/swagger.json");
+            var response = await client.GetAsync("/swagger/v1/yofi.wireapi.swagger.json");
 
             // Then: Success
             response.EnsureSuccessStatusCode();
