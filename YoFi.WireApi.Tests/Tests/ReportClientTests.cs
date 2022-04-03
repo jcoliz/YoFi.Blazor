@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YoFi.Tests.Integration.Helpers;
 
-namespace YoFi.WireApi.Tests.Tests
+namespace YoFi.WireApi.Tests
 {
     [TestClass]
     public class ReportClientTests: IntegrationTests
@@ -71,6 +71,23 @@ namespace YoFi.WireApi.Tests.Tests
         }
 
         [TestMethod]
+        public async Task GetAllReports()
+        {
+            // Given: The list of all report definitions
+            var definitions = await wireapi.ListReportsAsync();
+            var slugs = definitions.Select(x => x.Slug);
+
+            foreach (var slug in slugs)
+            {
+                // When: Requesting each report {name}
+                var result = await wireapi.BuildReportAsync(new Client.ReportParameters() { Slug = slug, Year = sampledatayear });
+
+                // Then: Expected report is returned
+                Assert.AreEqual(slug, result.Definition);
+            }
+        }
+
+        [TestMethod]
         public async Task GetReportNotFound()
         {
             try
@@ -86,7 +103,7 @@ namespace YoFi.WireApi.Tests.Tests
             }
             catch
             {
-                throw new Exception("Unexpect exception type");
+                throw new Exception("Unexpected exception type");
             }
         }
 
@@ -111,6 +128,5 @@ namespace YoFi.WireApi.Tests.Tests
         }
 
         #endregion
-
     }
 }
