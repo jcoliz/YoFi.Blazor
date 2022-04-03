@@ -11,7 +11,7 @@ namespace YoFi.WireApi.Controllers
     /// Exposes an IReportEngine to the network
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("wireapi/[controller]")]
     [Produces("application/json")]
     public class ReportsController : ControllerBase
     {

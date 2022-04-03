@@ -16,7 +16,7 @@ namespace YoFi.WireApi.Controllers;
 /// This is meant to be so thin it could be auto-generated
 /// </remarks>
 [ApiController]
-[Route("[controller]")]
+[Route("wireapi/[controller]")]
 [Produces("application/json")]
 public class TransactionsController : ControllerBase
 {

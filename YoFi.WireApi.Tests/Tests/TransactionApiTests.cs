@@ -9,7 +9,7 @@ public class TransactionApiTests: BaseObjectApiTests<Transaction>
 {
     #region Properties
 
-    protected override string urlroot { get; set; } = "/Transactions";
+    protected override string urlroot { get; set; } = "wireapi/Transactions";
 
     #endregion
 

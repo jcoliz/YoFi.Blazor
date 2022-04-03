@@ -20,7 +20,7 @@ namespace YoFi.WireApi.Tests
 
         #region Properties
 
-        protected override string urlroot { get; set; } = "/Reports";
+        protected override string urlroot { get; set; } = "wireapi/Reports";
 
         #endregion
 
