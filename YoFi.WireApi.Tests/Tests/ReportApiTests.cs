@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using YoFi.Core.Reports;
 using YoFi.Tests.Integration.Helpers;
 
-namespace YoFi.Experiments.WebApi.Tests
+namespace YoFi.WireApi.Tests
 {
     [TestClass]
     public class ReportApiTests: BaseApiTests

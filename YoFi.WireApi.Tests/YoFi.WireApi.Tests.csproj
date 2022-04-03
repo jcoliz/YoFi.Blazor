@@ -31,8 +31,4 @@
     <ProjectReference Include="..\YoFi.WireApi.Host\YoFi.WireApi.Host.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-
 </Project>

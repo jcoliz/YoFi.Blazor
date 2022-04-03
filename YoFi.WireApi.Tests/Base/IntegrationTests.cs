@@ -11,7 +11,7 @@ using YoFi.Core.Models;
 using YoFi.Experiments.WebApi.Data;
 using YoFi.Tests.Integration.Helpers;
 
-namespace YoFi.Experiments.WebApi.Tests
+namespace YoFi.WireApi.Tests
 {
     public class IntegrationTests: IFakeObjectsSaveTarget
     {

@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using YoFi.Core.Models;
 using YoFi.Tests.Integration.Helpers;
 
-namespace YoFi.Experiments.WebApi.Tests;
+namespace YoFi.WireApi.Tests;
 
 [TestClass]
 public class TransactionApiTests: BaseObjectApiTests<Transaction>

@@ -14,7 +14,7 @@ using System.Web;
 using YoFi.Core.Models;
 using YoFi.Core.Repositories.Wire;
 
-namespace YoFi.Experiments.WebApi.Tests
+namespace YoFi.WireApi.Tests
 {
     [TestClass]
     public abstract class BaseObjectApiTests<T>: BaseApiTests where T : class, IID, new()
