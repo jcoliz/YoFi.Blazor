@@ -23,6 +23,7 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().Create
 {
     var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.EnsureCreated();
+    await SampleDataStore.SeedFullAsync(context);
 }
 
 // Configure the HTTP request pipeline.

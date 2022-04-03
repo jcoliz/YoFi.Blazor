@@ -1,13 +1,11 @@
 ﻿@page "/fetchdata"
 @inject HttpClient Http
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>Transactions</PageTitle>
 
-<h1>Weather forecast</h1>
+<h1>Transactions</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-@if (forecasts == null)
+@if (txs == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -16,20 +14,20 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th style="text-align:right">Date</th>
+                <th>Payee</th>
+                <th style="text-align:right">Amount</th>
+                <th>Category</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var tx in txs.Items)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td style="text-align:right" >@tx.Timestamp.Date.ToString("M/dd")</td>
+                    <td>@tx.Payee</td>
+                    <td style="text-align:right">@tx.Amount.ToString("C2")</td>
+                    <td>@tx.Category</td>
                 </tr>
             }
         </tbody>
@@ -37,11 +35,13 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private WireApi.Client.TransactionWireQueryResult txs;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        var wireapi = new WireApi.Client.WireApiClient("/",Http);
+
+        txs = await wireapi.ListTransactionsAsync(null,null,null,null,null); // await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
     }
 
     public class WeatherForecast
