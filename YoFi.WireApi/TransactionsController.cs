@@ -1,5 +1,7 @@
 using Common.DotNet;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Net;
 using YoFi.Core.Models;
 using YoFi.Core.Repositories;
@@ -18,11 +20,11 @@ namespace YoFi.Experiments.WebApi.Controllers;
 [Produces("application/json")]
 public class TransactionsController : ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<TransactionsController> _logger;
     private readonly ITransactionRepository _repository;
     private readonly IClock _clock;
 
-    public TransactionsController(ILogger<WeatherForecastController> logger, ITransactionRepository repository, IClock clock)
+    public TransactionsController(ILogger<TransactionsController> logger, ITransactionRepository repository, IClock clock)
     {
         _logger = logger;
         _repository = repository;

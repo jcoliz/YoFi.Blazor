@@ -1,5 +1,7 @@
 ﻿using Common.DotNet;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Net;
 using YoFi.Core.Reports;
 
@@ -13,11 +15,11 @@ namespace YoFi.Experiments.WebApi.Controllers
     [Produces("application/json")]
     public class ReportsController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<ReportsController> _logger;
         private readonly IReportEngine _builder;
         private readonly IClock _clock;
 
-        public ReportsController(ILogger<WeatherForecastController> logger, IReportEngine builder, IClock clock)
+        public ReportsController(ILogger<ReportsController> logger, IReportEngine builder, IClock clock)
         {
             _logger = logger;
             _builder = builder;
