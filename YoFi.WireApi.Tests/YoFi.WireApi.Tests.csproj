@@ -23,12 +23,19 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.3" />
-
+	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	<PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\YoFi.Experiments.WebApi.Client\YoFi.Experiments.WebApi.Client.csproj" />
     <ProjectReference Include="..\YoFi.WireApi.Host\YoFi.WireApi.Host.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+	<OpenApiReference Include="..\YoFi.WireApi.Host\yofi.wireapi.swagger.json" CodeGenerator="NSwagCSharp" Namespace="YoFi.WireApi.Client" ClassName="WireApiClient" Link="OpenAPIs\yofi.wireapi.swagger.json" />
   </ItemGroup>
 
 </Project>
