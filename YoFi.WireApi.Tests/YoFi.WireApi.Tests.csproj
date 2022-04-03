@@ -35,7 +35,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-	<OpenApiReference Include="..\YoFi.WireApi.Host\yofi.wireapi.swagger.json" CodeGenerator="NSwagCSharp" Namespace="YoFi.WireApi.Client" ClassName="WireApiClient" Link="OpenAPIs\yofi.wireapi.swagger.json" />
+	<OpenApiProjectReference Include="..\YoFi.WireApi.Host\YoFi.WireApi.Host.csproj" CodeGenerator="NSwagCSharp" Namespace="YoFi.WireApi.Client" ClassName="WireApiClient"/>
   </ItemGroup>
 
 </Project>
