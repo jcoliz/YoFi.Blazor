@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using YoFi.Tests.Integration.Helpers;
 
@@ -43,7 +41,7 @@ namespace YoFi.WireApi.Tests.Tests
         [TestInitialize]
         public void SetUp()
         {
-            wireapi = new WireApi.Client.WireApiClient("/", integrationcontext.client);
+            wireapi = new Client.WireApiClient("/", integrationcontext.client);
         }
 
         #endregion

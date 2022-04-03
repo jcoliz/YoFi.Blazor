@@ -12,7 +12,7 @@ namespace YoFi.WireApi.Tests
     {
         #region Fields
 
-        WireApi.Client.WireApiClient wireapi;
+        Client.WireApiClient wireapi;
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace YoFi.WireApi.Tests
         [TestInitialize]
         public void SetUp()
         {
-            wireapi = new WireApi.Client.WireApiClient("/", integrationcontext.client);
+            wireapi = new Client.WireApiClient("/", integrationcontext.client);
         }
 
         [TestCleanup]
