@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.WireApi.Tests", "YoFi.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoFi.Blazor.Client", "YoFi.Blazor.Client\YoFi.Blazor.Client.csproj", "{00F7E21A-7C46-41F1-9009-711011804A73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoFi.Blazor.Server", "YoFi.Blazor.Server\YoFi.Blazor.Server.csproj", "{2CA12D21-6BBC-43B8-BA79-6659822D65C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{00F7E21A-7C46-41F1-9009-711011804A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00F7E21A-7C46-41F1-9009-711011804A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00F7E21A-7C46-41F1-9009-711011804A73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CA12D21-6BBC-43B8-BA79-6659822D65C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CA12D21-6BBC-43B8-BA79-6659822D65C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CA12D21-6BBC-43B8-BA79-6659822D65C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CA12D21-6BBC-43B8-BA79-6659822D65C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
