@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.Core", "submodules\YoF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoFi.Experiments.WebApi.Client", "YoFi.Experiments.WebApi.Client\YoFi.Experiments.WebApi.Client.csproj", "{3B1BD5B8-3ECE-4334-A8EA-4B83B52D52D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoFi.WireApi", "YoFi.WireApi\YoFi.WireApi.csproj", "{60E445CE-0B1E-4927-9CCE-198797FDEED8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3B1BD5B8-3ECE-4334-A8EA-4B83B52D52D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B1BD5B8-3ECE-4334-A8EA-4B83B52D52D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B1BD5B8-3ECE-4334-A8EA-4B83B52D52D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E445CE-0B1E-4927-9CCE-198797FDEED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E445CE-0B1E-4927-9CCE-198797FDEED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E445CE-0B1E-4927-9CCE-198797FDEED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E445CE-0B1E-4927-9CCE-198797FDEED8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
