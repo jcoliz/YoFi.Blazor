@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="jcoliz.FakeObjects" Version="1.0.0" />
     <PackageReference Include="jcoliz.OpenOfficeXml.Serializer" Version="1.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
@@ -35,7 +36,7 @@
   </ItemGroup>
 	
   <ItemGroup>
-	<OpenApiProjectReference Include="..\YoFi.WireApi.Host\YoFi.WireApi.Host.csproj" CodeGenerator="NSwagCSharp" Namespace="YoFi.WireApi.Client" ClassName="WireApiClient"/>
+	<OpenApiProjectReference Include="..\YoFi.WireApi.Host\YoFi.WireApi.Host.csproj" CodeGenerator="NSwagCSharp" Namespace="YoFi.WireApi.Client" ClassName="WireApiClient" />
   </ItemGroup>
 
 </Project>

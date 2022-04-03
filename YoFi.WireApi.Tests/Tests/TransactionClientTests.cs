@@ -1,4 +1,5 @@
-﻿using jcoliz.FakeObjects;
+﻿using AutoMapper;
+using jcoliz.FakeObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -15,6 +16,7 @@ namespace YoFi.WireApi.Tests
         #region Fields
 
         Client.WireApiClient wireapi;
+        static IMapper mapper;
 
         #endregion
 
@@ -24,6 +26,9 @@ namespace YoFi.WireApi.Tests
         public static void InitialSetup(TestContext tcontext)
         {
             integrationcontext = new IntegrationContext(tcontext.FullyQualifiedTestClassName);
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Core.Models.Transaction, Client.Transaction>());
+            mapper = config.CreateMapper();
         }
 
         [ClassCleanup]
@@ -176,7 +181,7 @@ namespace YoFi.WireApi.Tests
 
             // When: Creating a new item
             // TODO: Need extension method to create a client transaction from a model transaction
-            var response = await wireapi.CreateTransactionAsync(new Client.Transaction() { Timestamp = expected.Timestamp, Payee = expected.Payee, Amount = (double)expected.Amount, Memo = expected.Memo });
+            var response = await wireapi.CreateTransactionAsync(mapper.Map<Client.Transaction>(expected));
 
             // Then: Now are two items in database
             Assert.AreEqual(items.Count, context.Set<Core.Models.Transaction>().Count());
