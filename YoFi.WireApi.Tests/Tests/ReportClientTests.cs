@@ -58,6 +58,27 @@ namespace YoFi.WireApi.Tests.Tests
             // Then: Report definitions are returned
             Assert.IsTrue(result.Count > 10);
         }
+
+        [TestMethod]
+        public async Task GetSummary()
+        {
+            // When: Requesting summary report
+            var result = await wireapi.BuildSummaryReportAsync(new Client.ReportParameters() { Year = sampledatayear });
+
+            // Then: Expected summary reports are returned
+
+            // Two report groups
+            Assert.AreEqual(2, result.Count);
+
+            // The reports each group
+            Assert.AreEqual(3, result.First().Count);
+            Assert.AreEqual(3, result.Last().Count);
+
+            // Totals as expected (Note that the client uses doubles for numbers)
+            Assert.AreEqual(31509.36, result.First().Last().GrandTotal, 1e-5);
+            Assert.AreEqual(5629.74, result.Last().Last().GrandTotal, 1e-5);
+        }
+
         #endregion
 
     }
