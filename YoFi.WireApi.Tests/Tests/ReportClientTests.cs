@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +61,26 @@ namespace YoFi.WireApi.Tests.Tests
         }
 
         [TestMethod]
+        public async Task GetReportNotFound()
+        {
+            try
+            {
+                // When: Requesting report {name} where it won't be found
+                var name = "bogus";
+                var result = await wireapi.BuildReportAsync(new Client.ReportParameters() { Slug = name, Year = sampledatayear });
+            }
+            catch (Client.ApiException<Client.ProblemDetails> ex)
+            {
+                // Then: Not Found
+                Assert.AreEqual(StatusCodes.Status404NotFound, ex.StatusCode);
+            }
+            catch
+            {
+                throw new Exception("Unexpect exception type");
+            }
+        }
+
+        [TestMethod]
         public async Task GetSummary()
         {
             // When: Requesting summary report
@@ -74,9 +95,9 @@ namespace YoFi.WireApi.Tests.Tests
             Assert.AreEqual(3, result.First().Count);
             Assert.AreEqual(3, result.Last().Count);
 
-            // Totals as expected (Note that the client uses doubles for numbers)
-            Assert.AreEqual(31509.36, result.First().Last().GrandTotal, 1e-5);
-            Assert.AreEqual(5629.74, result.Last().Last().GrandTotal, 1e-5);
+            // Totals as expected (Note that OpenAPI has no fixed point (decimal) data type)
+            Assert.AreEqual(31509.36m, (decimal)result.First().Last().GrandTotal);
+            Assert.AreEqual(5629.74m, (decimal)result.Last().Last().GrandTotal);
         }
 
         #endregion

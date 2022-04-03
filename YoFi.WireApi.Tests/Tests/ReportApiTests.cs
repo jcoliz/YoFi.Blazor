@@ -109,7 +109,6 @@ namespace YoFi.WireApi.Tests
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
 
-
         [TestMethod]
         public async Task GetSummary()
         {
