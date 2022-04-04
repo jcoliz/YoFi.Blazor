@@ -11,9 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.WireApi.Host", "YoFi.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.WireApi.Tests", "YoFi.WireApi.Tests\YoFi.WireApi.Tests.csproj", "{0A21C198-40B4-4CA8-B128-2D9FE1579EB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoFi.Blazor.Client", "YoFi.Blazor.Client\YoFi.Blazor.Client.csproj", "{00F7E21A-7C46-41F1-9009-711011804A73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.Blazor.Client", "YoFi.Blazor.Client\YoFi.Blazor.Client.csproj", "{00F7E21A-7C46-41F1-9009-711011804A73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YoFi.Blazor.Server", "YoFi.Blazor.Server\YoFi.Blazor.Server.csproj", "{2CA12D21-6BBC-43B8-BA79-6659822D65C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.Blazor.Server", "YoFi.Blazor.Server\YoFi.Blazor.Server.csproj", "{2CA12D21-6BBC-43B8-BA79-6659822D65C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5FC3C61A-07A7-4AF7-A66D-A9E12A0B1F5C}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
