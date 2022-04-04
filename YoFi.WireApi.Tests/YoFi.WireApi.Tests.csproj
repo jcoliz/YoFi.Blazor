@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <IsPackable>false</IsPackable>
+	  <IsPackable>false</IsPackable>
+	  <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,7 +37,6 @@
   </ItemGroup>
 	
   <ItemGroup>
-	<OpenApiProjectReference Include="..\YoFi.WireApi.Host\YoFi.WireApi.Host.csproj" CodeGenerator="NSwagCSharp" Namespace="YoFi.WireApi.Client" ClassName="WireApiClient" />
+	<OpenApiProjectReference Include="..\YoFi.WireApi\YoFi.WireApi.csproj" CodeGenerator="NSwagCSharp" Namespace="YoFi.WireApi.Client" ClassName="WireApiClient" />
   </ItemGroup>
-
 </Project>

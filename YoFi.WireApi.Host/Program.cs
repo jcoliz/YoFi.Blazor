@@ -14,7 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerDocument( o => { o.UseRouteNameAsOperationId = true; o.GenerateAbstractSchemas = false; });
 
 builder.Services.AddSingleton<IClock>(new SystemClock());
 builder.Services.AddScoped<IDataContext, ApplicationDbContext>();
@@ -32,14 +32,14 @@ using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().Create
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(c =>
+    app.UseOpenApi(c =>
     {
-        c.RouteTemplate = "/swagger/{documentName}/yofi.wireapi.swagger.json";
+        c.Path = "/swagger/{documentName}/yofi.wireapi.swagger.json";
     });
 
-    app.UseSwaggerUI(options =>
+    app.UseSwaggerUi3(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/yofi.wireapi.swagger.json", "v1");
+        options.DocumentPath = "/swagger/{documentName}/yofi.wireapi.swagger.json";
     });
 }
 

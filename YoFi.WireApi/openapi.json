@@ -1,0 +1,915 @@
+{
+  "x-generator": "NSwag v13.15.10.0 (NJsonSchema v10.6.10.0 (Newtonsoft.Json v9.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "My Title",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/wireapi/Reports": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "ListReports",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ReportDefinition"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "BuildReport",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReportParameters"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WireReport"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/wireapi/Reports/Summary": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "operationId": "BuildSummaryReport",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parameters",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReportParameters"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/WireReport"
+                }
+              }
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/wireapi/Transactions": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "operationId": "ListTransactions",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "string",
+            "name": "Query",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Page",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Order",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "View",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "boolean",
+            "name": "All",
+            "in": "query",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WireQueryResultOfTransaction"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "operationId": "CreateTransaction",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "transaction",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Transaction"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "201": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Transaction"
+            }
+          }
+        }
+      }
+    },
+    "/wireapi/Transactions/{id}": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "operationId": "GetTransaction",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Transaction"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Transactions"
+        ],
+        "operationId": "DeleteTransaction",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Transactions"
+        ],
+        "operationId": "UpdateTransaction",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "name": "transaction",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Transaction"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/wireapi/Transactions/Download/{year}": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "operationId": "DownloadTransactions",
+        "produces": [
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "allyears",
+            "in": "query",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "query",
+            "in": "query",
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FileStream"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ReportDefinition": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "sourceParameters": {
+          "type": "string"
+        },
+        "customColumns": {
+          "type": "string"
+        },
+        "wholeYear": {
+          "type": "boolean"
+        },
+        "yearProgress": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sortOrder": {
+          "type": "string"
+        },
+        "withMonthColumns": {
+          "type": "boolean"
+        },
+        "withTotalColumn": {
+          "type": "boolean"
+        },
+        "skipLevels": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "numLevels": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "displayLevelAdjustment": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "WireReport": {
+      "type": "object",
+      "required": [
+        "displayLevelAdjustment",
+        "grandTotal"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string"
+        },
+        "columnLabels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ColumnLabel"
+          }
+        },
+        "rowLabels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RowLabel"
+          }
+        },
+        "displayLevelAdjustment": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "grandTotal": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WireReportLine"
+          }
+        }
+      }
+    },
+    "ColumnLabel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseLabel"
+        },
+        {
+          "type": "object",
+          "required": [
+            "isCalculated",
+            "displayAsPercent",
+            "leafNodesOnly",
+            "isSeries",
+            "priority"
+          ],
+          "properties": {
+            "isCalculated": {
+              "type": "boolean"
+            },
+            "displayAsPercent": {
+              "type": "boolean"
+            },
+            "leafNodesOnly": {
+              "type": "boolean"
+            },
+            "isSeries": {
+              "type": "boolean"
+            },
+            "priority": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "BaseLabel": {
+      "type": "object",
+      "required": [
+        "isTotal",
+        "isSortingAfterTotal"
+      ],
+      "properties": {
+        "uniqueID": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isTotal": {
+          "type": "boolean"
+        },
+        "isSortingAfterTotal": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RowLabel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaseLabel"
+        },
+        {
+          "type": "object",
+          "required": [
+            "level"
+          ],
+          "properties": {
+            "level": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "collector": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "WireReportLine": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      }
+    },
+    "ProblemDetails": {
+      "type": "object",
+      "additionalProperties": {},
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "instance": {
+          "type": "string"
+        }
+      }
+    },
+    "ReportParameters": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string"
+        },
+        "year": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "showmonths": {
+          "type": "boolean"
+        },
+        "level": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "WireQueryResultOfTransaction": {
+      "type": "object",
+      "properties": {
+        "parameters": {
+          "$ref": "#/definitions/IWireQueryParameters"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          }
+        },
+        "pageInfo": {
+          "$ref": "#/definitions/IWirePageInfo"
+        }
+      }
+    },
+    "IWireQueryParameters": {
+      "type": "object",
+      "required": [
+        "all"
+      ],
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "order": {
+          "type": "string"
+        },
+        "view": {
+          "type": "string"
+        },
+        "all": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Transaction": {
+      "type": "object",
+      "required": [
+        "id",
+        "timestamp",
+        "amount",
+        "hasSplits",
+        "isSplitsOK"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "timestamp": {
+          "title": "Date",
+          "type": "string",
+          "format": "date"
+        },
+        "payee": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "category": {
+          "type": "string"
+        },
+        "memo": {
+          "type": "string"
+        },
+        "bankReference": {
+          "type": "string"
+        },
+        "hidden": {
+          "type": "boolean"
+        },
+        "imported": {
+          "type": "boolean"
+        },
+        "selected": {
+          "type": "boolean"
+        },
+        "receiptUrl": {
+          "type": "string"
+        },
+        "splits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Split"
+          }
+        },
+        "hasSplits": {
+          "type": "boolean"
+        },
+        "isSplitsOK": {
+          "type": "boolean"
+        },
+        "strippedPayee": {
+          "type": "string"
+        }
+      }
+    },
+    "Split": {
+      "type": "object",
+      "required": [
+        "id",
+        "amount",
+        "transactionID"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "amount": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "category": {
+          "type": "string"
+        },
+        "memo": {
+          "type": "string"
+        },
+        "transactionID": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "IWirePageInfo": {
+      "type": "object",
+      "required": [
+        "page",
+        "pageSize",
+        "firstItem",
+        "numItems",
+        "totalPages",
+        "totalItems"
+      ],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstItem": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "numItems": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalPages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "totalItems": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "FileStream": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Stream"
+        },
+        {
+          "type": "object",
+          "required": [
+            "handle",
+            "canRead",
+            "canWrite",
+            "safeFileHandle",
+            "name",
+            "isAsync",
+            "length",
+            "position",
+            "canSeek"
+          ],
+          "properties": {
+            "handle": {
+              "x-deprecated": true,
+              "x-deprecatedMessage": "FileStream.Handle has been deprecated. Use FileStream's SafeFileHandle property instead.",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/IntPtr"
+                }
+              ]
+            },
+            "canRead": {
+              "type": "boolean"
+            },
+            "canWrite": {
+              "type": "boolean"
+            },
+            "safeFileHandle": {
+              "$ref": "#/definitions/SafeFileHandle"
+            },
+            "name": {
+              "type": "string"
+            },
+            "isAsync": {
+              "type": "boolean"
+            },
+            "length": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "position": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "canSeek": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "IntPtr": {
+      "type": "object"
+    },
+    "SafeFileHandle": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/SafeHandleZeroOrMinusOneIsInvalid"
+        },
+        {
+          "type": "object",
+          "required": [
+            "isAsync"
+          ],
+          "properties": {
+            "isAsync": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "SafeHandleZeroOrMinusOneIsInvalid": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/SafeHandle"
+        },
+        {
+          "type": "object",
+          "required": [
+            "isInvalid"
+          ],
+          "properties": {
+            "isInvalid": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "SafeHandle": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CriticalFinalizerObject"
+        },
+        {
+          "type": "object",
+          "required": [
+            "isClosed"
+          ],
+          "properties": {
+            "isClosed": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "CriticalFinalizerObject": {
+      "type": "object"
+    },
+    "Stream": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MarshalByRefObject"
+        },
+        {
+          "type": "object",
+          "required": [
+            "canTimeout",
+            "readTimeout",
+            "writeTimeout"
+          ],
+          "properties": {
+            "canTimeout": {
+              "type": "boolean"
+            },
+            "readTimeout": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "writeTimeout": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "MarshalByRefObject": {
+      "type": "object"
+    }
+  }
+}
