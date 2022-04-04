@@ -37,7 +37,7 @@ else
             }
         </tbody>
     </table>
-    <Pagination PageInfo="@txs.PageInfo" Parameters="@txs.Parameters"/>
+    <Pagination PageInfo="@txs.PageInfo" Parameters="@txs.Parameters" PageUpdated=@UpdatePage/>
 }
 
 @code {
@@ -47,5 +47,12 @@ else
     {
         var wireapi = new WireApi.Client.WireApiClient("/",Http);
         txs = await wireapi.ListTransactionsAsync(null,null,null,null,null);
+    }
+
+    private async Task UpdatePage(int newpage)
+    {
+        var wireapi = new WireApi.Client.WireApiClient("/",Http);
+        txs = await wireapi.ListTransactionsAsync(null,newpage,null,null,null);
+       
     }
 }
