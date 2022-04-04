@@ -1,0 +1,84 @@
+﻿<div class="mt-2 row">
+    <div class="col-sm-7">
+        <p class="fs-6">Displaying <span data-test-id="firstitem">@PageInfo.FirstItem</span> through <span data-test-id="lastitem">@(PageInfo.FirstItem + PageInfo.NumItems - 1)</span> of <span data-test-id="totalitems">@PageInfo.TotalItems</span>.</p>
+    </div>
+    <nav class="col-sm-5" aria-label="Pagination control">
+        <ul class="pagination justify-content-end">
+            @if (PageInfo.Page > 2 && PageInfo.TotalPages > 3)
+            {
+                <li class="page-item">
+                    <a asp-route-o="@Parameters.Order"
+                       asp-route-q="@Parameters.Query"
+                       asp-route-v="@Parameters.View"
+                       aria-label="First Page"
+                       class="page-link">&laquo;</a>
+                </li>
+            }
+            @if (PageInfo.Page == PageInfo.TotalPages && PageInfo.TotalPages > 2)
+            {
+                var showpage = PageInfo.Page - 2;
+                <li class="page-item">
+                    <a asp-route-o="@Parameters.Order"
+                       asp-route-p="@showpage"
+                       asp-route-q="@Parameters.Query"
+                       asp-route-v="@Parameters.View"
+                       class="page-link">@showpage</a>
+                </li>
+            }
+            @if (PageInfo.Page > 1)
+            {
+                var showpage = PageInfo.Page - 1;
+                <li class="page-item">
+                    <a asp-route-o="@Parameters.Order"
+                       asp-route-p="@showpage"
+                       asp-route-q="@Parameters.Query"
+                       asp-route-v="@Parameters.View"
+                       class="page-link">@showpage</a>
+                </li>
+            }
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">@PageInfo.Page</span>
+            </li>
+            @if (PageInfo.Page < PageInfo.TotalPages)
+            {
+                var showpage = PageInfo.Page + 1;
+                <li class="page-item">
+                    <a asp-route-o="@Parameters.Order"
+                       asp-route-p="@showpage"
+                       asp-route-q="@Parameters.Query"
+                       asp-route-v="@Parameters.View"
+                       class="page-link" data-test-id="nextpage">@showpage</a>
+                </li>
+            }
+            @if (PageInfo.Page == 1 && PageInfo.TotalPages > 2)
+            {
+                var showpage = PageInfo.Page + 2;
+                <li class="page-item">
+                    <a asp-route-o="@Parameters.Order"
+                       asp-route-p="@showpage"
+                       asp-route-q="@Parameters.Query"
+                       asp-route-v="@Parameters.View"
+                       class="page-link">@showpage</a>
+                </li>
+            }
+            @if (PageInfo.Page + 1 < PageInfo.TotalPages && PageInfo.TotalPages > 3)
+            {
+                <li class="page-item">
+                    <a asp-route-o="@Parameters.Order"
+                       asp-route-p="@PageInfo.TotalPages"
+                       asp-route-q="@Parameters.Query"
+                       asp-route-v="@Parameters.View"
+                       aria-label="Last Page"
+                       class="page-link">&raquo;</a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+@code {
+    [Parameter]
+    public YoFi.WireApi.Client.IWirePageInfo PageInfo { get; set; }
+
+    [Parameter]
+    public YoFi.WireApi.Client.IWireQueryParameters Parameters { get; set; }
+}

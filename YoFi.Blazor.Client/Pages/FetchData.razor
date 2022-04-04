@@ -1,4 +1,5 @@
 ﻿@page "/fetchdata"
+@using YoFi.Blazor.Client.Components
 @inject HttpClient Http
 
 <PageTitle>Transactions</PageTitle>
@@ -36,6 +37,7 @@ else
             }
         </tbody>
     </table>
+    <Pagination PageInfo="@txs.PageInfo" Parameters="@txs.Parameters"/>
 }
 
 @code {
