@@ -6,46 +6,30 @@
         <ul class="pagination justify-content-end">
             @if (PageInfo.Page > 2 && PageInfo.TotalPages > 3)
             {
-                <li class="page-item">
-                    <button class="page-link" @onclick="() => UpdatePage(1)" >&laquo;</button>
-                </li>
+                <PageLink Page="1" Click=UpdatePage>&laquo;</PageLink>
             }
             @if (PageInfo.Page == PageInfo.TotalPages && PageInfo.TotalPages > 2)
             {
-                var showpage = PageInfo.Page - 2;
-                <li class="page-item">
-                    <button class="page-link" @onclick="() => UpdatePage(showpage)" >@showpage</button>
-                </li>
+                <PageLink Page="@(PageInfo.Page - 2)" Click=UpdatePage/>
             }
             @if (PageInfo.Page > 1)
             {
-                var showpage = PageInfo.Page - 1;
-                <li class="page-item">
-                    <button class="page-link" @onclick="() => UpdatePage(showpage)" >@showpage</button>
-                </li>
+                <PageLink Page="@(PageInfo.Page - 1)" Click=UpdatePage/>
             }
             <li class="page-item active" aria-current="page">
                 <span class="page-link">@PageInfo.Page</span>
             </li>
             @if (PageInfo.Page < PageInfo.TotalPages)
             {
-                var showpage = PageInfo.Page + 1;
-                <li class="page-item">
-                    <button class="page-link" @onclick="() => UpdatePage(showpage)" data-test-id="nextpage">@showpage</button>
-                </li>
+                <PageLink Page="@(PageInfo.Page + 1)" Click=UpdatePage/>
             }
             @if (PageInfo.Page == 1 && PageInfo.TotalPages > 2)
             {
-                var showpage = PageInfo.Page + 2;
-                <li class="page-item">
-                    <button class="page-link" @onclick="() => UpdatePage(showpage)" >@showpage</button>
-                </li>
+                <PageLink Page="@(PageInfo.Page + 2)" Click=UpdatePage/>
             }
             @if (PageInfo.Page + 1 < PageInfo.TotalPages && PageInfo.TotalPages > 3)
             {
-                <li class="page-item">
-                    <button class="page-link" @onclick="() => UpdatePage(PageInfo.TotalPages)" >&raquo;</button>
-                </li>
+                <PageLink Page="@PageInfo.TotalPages" Click=UpdatePage>&raquo;</PageLink>
             }
         </ul>
     </nav>

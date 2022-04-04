@@ -1,0 +1,25 @@
+﻿<li class="page-item">
+    <button class="page-link" @onclick="() => Click(Page)">@ButtonText</button>
+</li>
+
+@code {
+    [Parameter]
+    public int Page { get; set; }
+
+    [Parameter]
+    public Action<int> Click { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private RenderFragment ButtonText
+    {
+        get
+        {
+            if (ChildContent != null)
+                return ChildContent;
+            else
+                return x => x.AddContent(1, textContent: Page.ToString());
+        }
+    }
+}
