@@ -1,5 +1,9 @@
+<script setup>
+import NavItemLink from '@/components/NavItemLink.vue'
+</script>
+
 <template>
-<div>
+<div class="mb-4">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="">Navbar</a>
@@ -7,16 +11,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Download</a>
-                    </li>
+                <ul class="navbar-nav ms-auto" v-for="n in 3" :key="n">
+                    <NavItemLink :title="n" />
                 </ul>
             </div>
         </div>
