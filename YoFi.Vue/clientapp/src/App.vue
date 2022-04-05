@@ -1,9 +1,8 @@
 <template>
   <NavBar>
-    <NavItemLink title="Home" link="/" />
-    <NavItemLink title="About" link="/about" />
-    <NavItemLink title="Transactions" link="/txs" />
+    <NavItemLink title="Transactions" link="/" />
     <NavItemLink title="Reports" link="/reports" />
+    <NavItemLink title="Vue.js" link="/vue" />
   </NavBar>
   <div class="container">
     <router-view />
