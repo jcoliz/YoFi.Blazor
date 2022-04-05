@@ -1,10 +1,23 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <NavBar>
+    <NavItemLink title="Home" link="/" />
+    <NavItemLink title="About" link="/about" />
+  </NavBar>
   <router-view />
 </template>
+
+<script>
+import NavItemLink from "@/components/NavItemLink.vue";
+import NavBar from "@/components/NavBar.vue";
+
+export default {
+  name: "App",
+  components: {
+    NavItemLink,
+    NavBar,
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
