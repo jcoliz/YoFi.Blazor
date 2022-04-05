@@ -2,8 +2,11 @@
   <NavBar>
     <NavItemLink title="Home" link="/" />
     <NavItemLink title="About" link="/about" />
+    <NavItemLink title="Reports" link="/reports" />
   </NavBar>
-  <router-view />
+  <div class="container">
+    <router-view />
+  </div>
 </template>
 
 <script>
@@ -20,6 +23,14 @@ export default {
 </script>
 
 <style lang="scss">
+:root {
+  --color-1: #290661; /* $indigo-800 */
+  --color-1-darker: #140330; /* $indigo-900 */
+  --color-1-lighter: #c29ffa; /* $indigo-200 */
+  --color-2: #c29ffa; /* $indigo-200 */
+  --color-3: #e0cffc; /* $indigo-100 */
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
