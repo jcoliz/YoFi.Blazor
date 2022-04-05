@@ -13,7 +13,7 @@ import NavItemLink from '@/components/NavItemLink.vue'
             <div class="collapse navbar-collapse me-auto" id="navbarTogglerDemo02">
                 <ul class="navbar-nav">
                     <NavItemLink title="Home" link="/" />
-                    <NavItemLink title="About" link="/about" />
+                    <NavItemLink title="Transactions" link="/txs" />
                     <NavItemLink title="Reports" link="/reports" />
                 </ul>
             </div>
