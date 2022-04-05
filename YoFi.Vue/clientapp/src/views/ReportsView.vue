@@ -3,7 +3,9 @@ import PageNavBar from "@/components/PageNavBar.vue";
 </script>
 
 <template>
-  <PageNavBar title="Reports" />
+  <div data-test-id="ReportsView">
+    <PageNavBar title="Reports" />
+  </div>
 </template>
 
 <script>

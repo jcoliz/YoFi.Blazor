@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-light navbar-page mb-2">
+  <nav class="navbar navbar-light navbar-page mb-2" data-test-id="page-navbar">
     <div class="container-fluid">
-      <span class="navbar-brand h1 mt-1">{{ title }}</span>
+      <span class="navbar-brand h1 mt-1" data-test-id="title">{{ title }}</span>
     </div>
   </nav>
 </template>
