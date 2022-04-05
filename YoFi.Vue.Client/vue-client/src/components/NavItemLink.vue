@@ -1,6 +1,6 @@
 <template>
     <li class="nav-item">
-        <a class="nav-link" href="">Hello, {{title}}</a>
+        <a class="nav-link" href="">{{title}}</a>
     </li>
 </template>
 

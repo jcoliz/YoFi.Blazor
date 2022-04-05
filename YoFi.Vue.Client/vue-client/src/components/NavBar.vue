@@ -4,18 +4,46 @@ import NavItemLink from '@/components/NavItemLink.vue'
 
 <template>
 <div class="mb-4">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
             <a class="navbar-brand" href="">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav ms-auto" v-for="n in 3" :key="n">
-                    <NavItemLink :title="n" />
+            <div class="collapse navbar-collapse me-auto" id="navbarTogglerDemo02">
+                <ul class="navbar-nav">
+                    <NavItemLink title="Transactions" />
                 </ul>
+            </div>
+            <div class="navbar-nav ms-auto">
+                    <NavItemLink title="Login" />
             </div>
         </div>
     </nav>
 </div>
 </template>
+
+<style scoped>
+nav {
+  width: 100%;
+}
+
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
+
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
+
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+nav a:first-of-type {
+  border: 0;
+}
+
+</style>
