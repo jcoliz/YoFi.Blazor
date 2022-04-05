@@ -1,11 +1,13 @@
 <template>
-  <NavBar>
-    <NavItemLink title="Transactions" link="/" />
-    <NavItemLink title="Reports" link="/reports" />
-    <NavItemLink title="Vue.js" link="/vue" />
-  </NavBar>
-  <div class="container">
-    <router-view />
+  <div data-test-id="App">
+    <NavBar>
+      <NavItemLink title="Transactions" link="/" />
+      <NavItemLink title="Reports" link="/reports" />
+      <NavItemLink title="Vue.js" link="/vue" />
+    </NavBar>
+    <div class="container">
+      <router-view />
+    </div>
   </div>
 </template>
 

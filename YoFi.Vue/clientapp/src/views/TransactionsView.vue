@@ -7,7 +7,7 @@ import moment from "moment";
   <div>
     <PageNavBar title="Transactions" />
     <p v-if="this.loading"><em>Loading...</em></p>
-    <table className="table table-striped">
+    <table className="table table-striped" data-test-id="results">
       <thead>
         <tr>
           <th>Date</th>
@@ -16,8 +16,8 @@ import moment from "moment";
           <th>Summary</th>
         </tr>
       </thead>
-      <tbody v-for="forecast in results" :key="forecast.date">
-        <tr>
+      <tbody>
+        <tr v-for="forecast in results" :key="forecast.date">
           <td>{{ formatShortDate(forecast.date) }}</td>
           <td>{{ forecast.temperatureC }}</td>
           <td>{{ forecast.temperatureF }}</td>
