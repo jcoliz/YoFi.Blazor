@@ -36,6 +36,14 @@
   --section-gap: 160px;
 }
 
+:root {
+  --color-1: #290661; /* $indigo-800 */
+  --color-1-darker: #140330; /* $indigo-900 */
+  --color-1-lighter: #c29ffa; /* $indigo-200 */
+  --color-2: #c29ffa; /* $indigo-200 */
+  --color-3: #e0cffc; /* $indigo-100 */
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--vt-c-black);

@@ -1,5 +1,9 @@
+<script setup>
+import PageNavBar from '@/components/PageNavBar.vue';
+</script>
+
 <template>
-  <h1>Reports</h1>
+  <PageNavBar title="Reports"/>
 </template>
 
 <script>
