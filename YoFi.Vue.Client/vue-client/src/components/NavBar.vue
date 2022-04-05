@@ -14,10 +14,8 @@ import NavItemLink from '@/components/NavItemLink.vue'
                 <ul class="navbar-nav">
                     <NavItemLink title="Home" link="/" />
                     <NavItemLink title="About" link="/about" />
+                    <NavItemLink title="Reports" link="/reports" />
                 </ul>
-            </div>
-            <div class="navbar-nav ms-auto">
-                    <NavItemLink title="Login" />
             </div>
         </div>
     </nav>
