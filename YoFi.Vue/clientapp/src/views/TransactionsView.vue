@@ -1,5 +1,6 @@
 <script setup>
 import PageNavBar from "@/components/PageNavBar.vue";
+import moment from "moment";
 </script>
 
 <template>
@@ -17,7 +18,7 @@ import PageNavBar from "@/components/PageNavBar.vue";
       </thead>
       <tbody v-for="forecast in results" :key="forecast.date">
         <tr>
-          <td>{{ forecast.date }}</td>
+          <td>{{ formatShortDate(forecast.date) }}</td>
           <td>{{ forecast.temperatureC }}</td>
           <td>{{ forecast.temperatureF }}</td>
           <td>{{ forecast.summary }}</td>
@@ -37,6 +38,15 @@ export default {
   },
   async created() {
     this.getList();
+  },
+  computed: {
+    formatShortDate() {
+      return (d) => {
+        if (d) {
+          return moment(String(d)).format("M/DD");
+        }
+      };
+    },
   },
   methods: {
     async getList() {
