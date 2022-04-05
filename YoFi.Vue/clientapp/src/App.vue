@@ -2,6 +2,7 @@
   <NavBar>
     <NavItemLink title="Home" link="/" />
     <NavItemLink title="About" link="/about" />
+    <NavItemLink title="Transactions" link="/txs" />
     <NavItemLink title="Reports" link="/reports" />
   </NavBar>
   <div class="container">
