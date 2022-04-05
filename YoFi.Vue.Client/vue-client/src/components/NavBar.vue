@@ -12,7 +12,8 @@ import NavItemLink from '@/components/NavItemLink.vue'
             </button>
             <div class="collapse navbar-collapse me-auto" id="navbarTogglerDemo02">
                 <ul class="navbar-nav">
-                    <NavItemLink title="Transactions" />
+                    <NavItemLink title="Home" link="/" />
+                    <NavItemLink title="About" link="/about" />
                 </ul>
             </div>
             <div class="navbar-nav ms-auto">
