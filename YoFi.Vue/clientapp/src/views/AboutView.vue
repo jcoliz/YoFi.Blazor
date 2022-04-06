@@ -11,8 +11,12 @@ import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
   name: "AboutView",
+  pageTitle: "About",
   components: {
     HelloWorld,
+  },
+  async beforeCreate() {
+    document.title = "About - YoFi";
   },
 };
 </script>

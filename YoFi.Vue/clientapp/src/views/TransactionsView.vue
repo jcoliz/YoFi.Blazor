@@ -30,11 +30,19 @@ import moment from "moment";
 
 <script>
 export default {
+  name: "TransactionsView",
+  pageTitle: "Transactions",
+  components: {
+    PageNavBar,
+  },
   data() {
     return {
       loading: false,
       results: {},
     };
+  },
+  async beforeCreate() {
+    document.title = "Transactions - YoFi";
   },
   async created() {
     this.getList();

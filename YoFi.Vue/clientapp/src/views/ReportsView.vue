@@ -9,7 +9,16 @@ import PageNavBar from "@/components/PageNavBar.vue";
 </template>
 
 <script>
-export default {};
+export default {
+  name: "ReportsView",
+  pageTitle: "Reports",
+  components: {
+    PageNavBar,
+  },
+  async beforeCreate() {
+    document.title = "Reports - YoFi";
+  },
+};
 </script>
 
 <style></style>
