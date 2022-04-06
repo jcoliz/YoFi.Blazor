@@ -4,7 +4,7 @@ import moment from "moment";
 </script>
 
 <template>
-  <div>
+  <div data-test-id="TransactionsView">
     <PageNavBar title="Transactions" />
     <p v-if="this.loading"><em>Loading...</em></p>
     <table className="table table-striped" data-test-id="results">
