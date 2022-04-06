@@ -36,7 +36,6 @@ public class Portfolio: PageTest
         Assert.IsTrue(visible);
     }
 
-
     protected async Task SaveScreenshotAsync(string moment = null)
     {
         var testname = $"{TestContext.FullyQualifiedTestClassName.Split(".").Last()}/{TestContext.TestName}";
@@ -52,6 +51,9 @@ public class Portfolio: PageTest
 
     #region Tests
 
+    /// <summary>
+    /// [User Can] Navigate to the Transaction Page
+    /// </summary>
     [TestMethod]
     public async Task _01_Transactions()
     {
@@ -65,6 +67,9 @@ public class Portfolio: PageTest
         await SaveScreenshotAsync();
     }
 
+    /// <summary>
+    /// [User Can] View the newest (placeholder) Transactions
+    /// </summary>
     [TestMethod]
     public async Task _01A_Transactions_Loaded()
     {
@@ -83,6 +88,9 @@ public class Portfolio: PageTest
         await SaveScreenshotAsync();
     }
 
+    /// <summary>
+    /// [User Can] Navigate to the Reports Page
+    /// </summary>
     [TestMethod]
     public async Task _02_Reports()
     {
@@ -96,6 +104,9 @@ public class Portfolio: PageTest
         await SaveScreenshotAsync();
     }
 
+    /// <summary>
+    /// [User Can] Navigate to the About Page
+    /// </summary>
     [TestMethod]
     public async Task _03_AboutVue()
     {
