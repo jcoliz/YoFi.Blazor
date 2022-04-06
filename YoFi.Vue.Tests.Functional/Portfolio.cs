@@ -7,15 +7,31 @@ namespace YoFi.Vue.Tests.Functional;
 [TestClass]
 public class Portfolio: PageTest
 {
-    [TestMethod]
-    public async Task _01_Transactions()
+    #region Helpers
+
+    protected async Task WhenNavigatingToPage(string title)
     {
         // When: Navigating to the root of the site
         await Page.GotoAsync("http://localhost:5003");
 
-        // And: Clicking "Transactions" on the navbar
-        await Page.ClickAsync("#navbarNav >> text=Transactions");
+        // And: Clicking "{title}" on the navbar
+        await Page.ClickAsync($"#navbarNav >> text={title}");
         await Page.WaitForLoadStateAsync();
+
+        // Then: {title} View is visible
+        var visible = await Page.IsVisibleAsync($"data-test-id={title}View");
+        Assert.IsTrue(visible);
+    }
+
+    #endregion
+
+    #region Tests
+
+    [TestMethod]
+    public async Task _01_Transactions()
+    {
+        // When: Navigating to the Transactions page
+        await WhenNavigatingToPage("Transactions");
 
         // Then: Transactions View is visible
         var visible = await Page.IsVisibleAsync("data-test-id=TransactionsView");
@@ -25,12 +41,8 @@ public class Portfolio: PageTest
     [TestMethod]
     public async Task _02_Reports()
     {
-        // When: Navigating to the root of the site
-        await Page.GotoAsync("http://localhost:5003");
-
-        // And: Clicking "Reports" on the navbar
-        await Page.ClickAsync("#navbarNav >> text=Reports");
-        await Page.WaitForLoadStateAsync();
+        // When: Navigating to the Reports page
+        await WhenNavigatingToPage("Reports");
 
         // Then: Reports View is visible
         var visible = await Page.IsVisibleAsync("data-test-id=ReportsView");
@@ -40,16 +52,13 @@ public class Portfolio: PageTest
     [TestMethod]
     public async Task _03_AboutVue()
     {
-        // When: Navigating to the root of the site
-        await Page.GotoAsync("http://localhost:5003");
-
-        // And: Clicking "About" on the navbar
-        await Page.ClickAsync("#navbarNav >> text=About");
-        await Page.WaitForLoadStateAsync();
+        // When: Navigating to the About page
+        await WhenNavigatingToPage("About");
 
         // Then: About View is visible
         var visible = await Page.IsVisibleAsync("data-test-id=AboutView");
         Assert.IsTrue(visible);
     }
 
+    #endregion
 }
