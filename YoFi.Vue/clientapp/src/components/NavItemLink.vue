@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "NavItemLink",
   props: {
     title: String,
     link: String,

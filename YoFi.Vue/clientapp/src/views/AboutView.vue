@@ -1,5 +1,5 @@
 <template>
-  <div class="home" data-test-id="AboutView">
+  <div data-test-id="AboutView" class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
@@ -20,3 +20,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+div.home {
+  text-align: center;
+}
+</style>

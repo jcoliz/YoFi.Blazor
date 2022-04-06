@@ -5,9 +5,7 @@
       <NavItemLink title="Reports" link="/reports" />
       <NavItemLink title="About" link="/about" />
     </NavBar>
-    <div class="container">
-      <router-view />
-    </div>
+    <router-view class="container" />
   </div>
 </template>
 
@@ -34,11 +32,9 @@ export default {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Segoe UI", ui-sans-serif, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
 nav {

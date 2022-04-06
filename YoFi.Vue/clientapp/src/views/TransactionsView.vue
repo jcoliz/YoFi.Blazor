@@ -1,13 +1,25 @@
 <script setup>
 import PageNavBar from "@/components/PageNavBar.vue";
+import PaginationBar from "@/components/PaginationBar.vue";
 import moment from "moment";
 </script>
 
 <template>
   <div data-test-id="TransactionsView">
     <PageNavBar title="Transactions" />
-    <p v-if="this.loading"><em>Loading...</em></p>
-    <table className="table table-striped" data-test-id="results">
+    <div
+      v-if="this.loading"
+      class="d-flex justify-content-center spinner-container"
+    >
+      <div class="spinner-border my-5" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <table
+      data-test-id="results"
+      className="table table-striped"
+      v-if="this.hasdata"
+    >
       <thead>
         <tr>
           <th class="col-right">Date</th>
@@ -25,6 +37,11 @@ import moment from "moment";
         </tr>
       </tbody>
     </table>
+    <PaginationBar
+      v-if="this.hasdata"
+      v-bind="this.results.pageInfo"
+      @new-page="pageUpdate"
+    />
   </div>
 </template>
 
@@ -34,11 +51,13 @@ export default {
   pageTitle: "Transactions",
   components: {
     PageNavBar,
+    PaginationBar
   },
   data() {
     return {
       loading: false,
-      results: {},
+      hasdata: false,
+      results: {}
     };
   },
   async beforeCreate() {
@@ -54,21 +73,28 @@ export default {
           return moment(String(d)).format("M/DD");
         }
       };
-    },
+    }
   },
   methods: {
-    async getList() {
+    async getList(p) {
       this.loading = true;
+      this.hasdata = false;
 
       try {
-        const response = await fetch("/wireapi/Transactions");
+        let url = "/wireapi/Transactions";
+        if (p > 1) url = url + "/?page=" + p;
+        const response = await fetch(url);
         const data = await response.json();
         this.results = data;
+        this.hasdata = true;
       } finally {
         this.loading = false;
       }
     },
-  },
+    pageUpdate(p) {
+      this.getList(p);
+    }
+  }
 };
 </script>
 
@@ -79,5 +105,23 @@ export default {
 
 .col-left {
   text-align: left;
+}
+
+@keyframes delayVisibility {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.spinner-container {
+    animation: delayVisibility linear 0.2s; 
 }
 </style>
