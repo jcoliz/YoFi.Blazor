@@ -12,7 +12,7 @@ public class Portfolio: PageTest
     protected async Task WhenNavigatingToPage(string title)
     {
         // When: Navigating to the root of the site
-        await Page.GotoAsync("http://localhost:5003");
+        await Page.GotoAsync(TestContext.Properties["webAppUrl"] as string);
 
         // And: Clicking "{title}" on the navbar
         await Page.ClickAsync($"#navbarNav >> text={title}");
