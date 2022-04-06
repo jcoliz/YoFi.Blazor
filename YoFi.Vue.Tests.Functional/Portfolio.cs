@@ -39,6 +39,22 @@ public class Portfolio: PageTest
     }
 
     [TestMethod]
+    public async Task _01A_Transactions_Loaded()
+    {
+        // When: Navigating to the Transactions page
+        await WhenNavigatingToPage("Transactions");
+
+        // And: Awaiting results to become visible
+        var locator = Page.Locator("data-test-id=results");
+        await locator.WaitForAsync();
+
+        // Then: Five rows of results were loaded
+        var rows = locator.Locator("tbody tr");
+        var count = await rows.CountAsync();
+        Assert.AreEqual(5,count);
+    }
+
+    [TestMethod]
     public async Task _02_Reports()
     {
         // When: Navigating to the Reports page
