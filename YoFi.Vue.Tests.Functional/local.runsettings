@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<TestRunParameters>
+		<Parameter name="webAppUrl" value="http://localhost:5003/" />
+		<Parameter name="viewportSize" value="default" />
+	</TestRunParameters>
+</RunSettings>
