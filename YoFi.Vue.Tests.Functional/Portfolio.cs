@@ -6,6 +6,13 @@ using Microsoft.Playwright;
 
 namespace YoFi.Vue.Tests.Functional;
 
+/// <summary>
+/// Wide view of the whole breadth of the site
+/// </summary>
+/// <remarks>
+/// "Portfolio" tests intend to cover the entire horizontal space of the project, but
+/// very shallowly. Individual area tests will go deep in each area.
+/// </remarks>
 [TestClass]
 public class Portfolio: PageTest
 {
