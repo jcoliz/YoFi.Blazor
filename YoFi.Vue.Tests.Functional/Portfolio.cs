@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Playwright.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Playwright;
+using System;
 
 namespace YoFi.Vue.Tests.Functional;
 
@@ -41,6 +42,24 @@ public class Portfolio: PageTest
         // Then: {title} View is visible
         var visible = await Page.IsVisibleAsync($"data-test-id={title}View");
         Assert.IsTrue(visible);
+    }
+
+    protected async Task ThenContainsItemsAsync(int from, int to)
+    {
+        Assert.AreEqual(from.ToString(), await Page.TextContentAsync("data-test-id=firstitem"));
+        Assert.AreEqual(to.ToString(), await Page.TextContentAsync("data-test-id=lastitem"));
+    }
+
+    protected async Task<int> GetTotalItemsAsync() => await GetNumberAsync("data-test-id=totalitems");
+
+    protected async Task<int> GetNumberAsync(string selector)
+    {
+        var totalitems = await Page.TextContentAsync(selector);
+
+        if (!Int32.TryParse(totalitems, out int result))
+            result = 0;
+
+        return result;
     }
 
     protected async Task SaveScreenshotAsync(string moment = null)
@@ -93,6 +112,67 @@ public class Portfolio: PageTest
         Assert.AreEqual(25,count);
 
         await SaveScreenshotAsync();
+    }
+
+    /// <summary>
+    /// [User Can] View the current list of active payee matching rules
+    /// </summary>
+    [TestMethod]
+    public async Task Initial()
+    {
+        // When: Navigating to the Transactions page
+        await WhenNavigatingToPage("Transactions");
+
+        // And: All expected items are here
+        var totalitems = await GetTotalItemsAsync();
+        Assert.AreEqual(785,totalitems);
+
+        // And: This page covers items 1-25
+        await ThenContainsItemsAsync(from: 1, to: 25);
+    }
+
+    /// <summary>
+    /// [User Can] Page through the current list of active payee matching rules, without
+    /// having to wait the entire list to load.
+    /// [Scenario] Clicking on Page 2
+    /// </summary>
+    [TestMethod]
+    public async Task Page2()
+    {
+        // When: Navigating to the Transactions page
+        await WhenNavigatingToPage("Transactions");
+
+        // When: Clicking on the next page on the pagination control
+        await Page.ClickAsync("[aria-label=\"Page 2\"]");
+
+        // And: Awaiting results to become visible
+        var locator = Page.Locator("data-test-id=results");
+        await locator.WaitForAsync();
+
+        // Then: This page covers items 26-50
+        await ThenContainsItemsAsync(from: 26, to: 50);
+    }
+
+    /// <summary>
+    /// [User Can] Page through the current list of active payee matching rules, without
+    /// having to wait the entire list to load.
+    /// [Scenario] Clicking on Last Page
+    /// </summary>
+    [TestMethod]
+    public async Task LastPage()
+    {
+        // When: Navigating to the Transactions page
+        await WhenNavigatingToPage("Transactions");
+
+        // When: Clicking on the next page on the pagination control
+        await Page.ClickAsync("[aria-label=\"Last Page\"]");
+
+        // And: Awaiting results to become visible
+        var locator = Page.Locator("data-test-id=results");
+        await locator.WaitForAsync();
+
+        // Then: This page covers items 26-50
+        await ThenContainsItemsAsync(from: 776, to: 785);
     }
 
     /// <summary>
