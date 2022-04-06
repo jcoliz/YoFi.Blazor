@@ -1,12 +1,25 @@
 using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.Playwright.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Playwright;
 
 namespace YoFi.Vue.Tests.Functional;
 
 [TestClass]
 public class Portfolio: PageTest
 {
+    #region Overrides
+
+    public override BrowserNewContextOptions ContextOptions => 
+        new BrowserNewContextOptions
+        {
+            AcceptDownloads = true,
+            ViewportSize = new ViewportSize() { Width = 1080, Height = 810 }
+        };
+
+    #endregion
+
     #region Helpers
 
     protected async Task WhenNavigatingToPage(string title)
@@ -23,6 +36,18 @@ public class Portfolio: PageTest
         Assert.IsTrue(visible);
     }
 
+
+    protected async Task SaveScreenshotAsync(string moment = null)
+    {
+        var testname = $"{TestContext.FullyQualifiedTestClassName.Split(".").Last()}/{TestContext.TestName}";
+
+        var displaymoment = string.IsNullOrEmpty(moment) ? string.Empty : $"-{moment.Replace('/','-')}";
+
+        var filename = $"Screenshot/{testname}{displaymoment}.png";
+        await Page.ScreenshotAsync(new PageScreenshotOptions() { Path = filename, OmitBackground = true, FullPage = true });
+        TestContext.AddResultFile(filename);
+    }
+
     #endregion
 
     #region Tests
@@ -36,6 +61,8 @@ public class Portfolio: PageTest
         // Then: Transactions View is visible
         var visible = await Page.IsVisibleAsync("data-test-id=TransactionsView");
         Assert.IsTrue(visible);
+
+        await SaveScreenshotAsync();
     }
 
     [TestMethod]
@@ -52,6 +79,8 @@ public class Portfolio: PageTest
         var rows = locator.Locator("tbody tr");
         var count = await rows.CountAsync();
         Assert.AreEqual(5,count);
+
+        await SaveScreenshotAsync();
     }
 
     [TestMethod]
@@ -63,6 +92,8 @@ public class Portfolio: PageTest
         // Then: Reports View is visible
         var visible = await Page.IsVisibleAsync("data-test-id=ReportsView");
         Assert.IsTrue(visible);
+
+        await SaveScreenshotAsync();
     }
 
     [TestMethod]
@@ -74,7 +105,9 @@ public class Portfolio: PageTest
         // Then: About View is visible
         var visible = await Page.IsVisibleAsync("data-test-id=AboutView");
         Assert.IsTrue(visible);
-    }
+
+        await SaveScreenshotAsync();
+   }
 
     #endregion
 }
