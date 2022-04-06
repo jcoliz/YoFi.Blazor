@@ -28,11 +28,11 @@ public class Portfolio: PageTest
         // When: Navigating to the root of the site
         await Page.GotoAsync("http://localhost:5003");
 
-        // And: Clicking "Transactions" on the navbar
+        // And: Clicking "Reports" on the navbar
         await Page.ClickAsync("#navbarNav >> text=Reports");
         await Page.WaitForLoadStateAsync();
 
-        // Then: Transactions View is visible
+        // Then: Reports View is visible
         var visible = await Page.IsVisibleAsync("data-test-id=ReportsView");
         Assert.IsTrue(visible);
     }
@@ -43,12 +43,12 @@ public class Portfolio: PageTest
         // When: Navigating to the root of the site
         await Page.GotoAsync("http://localhost:5003");
 
-        // And: Clicking "Transactions" on the navbar
-        await Page.ClickAsync("#navbarNav >> text=Vue");
+        // And: Clicking "About" on the navbar
+        await Page.ClickAsync("#navbarNav >> text=About");
         await Page.WaitForLoadStateAsync();
 
-        // Then: Transactions View is visible
-        var visible = await Page.IsVisibleAsync("data-test-id=HomeView");
+        // Then: About View is visible
+        var visible = await Page.IsVisibleAsync("data-test-id=AboutView");
         Assert.IsTrue(visible);
     }
 
