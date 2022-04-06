@@ -10,18 +10,18 @@ import moment from "moment";
     <table className="table table-striped" data-test-id="results">
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Temp. (C)</th>
-          <th>Temp. (F)</th>
-          <th>Summary</th>
+          <th class="col-right">Date</th>
+          <th class="col-left">Payee</th>
+          <th class="col-right">Amount</th>
+          <th class="col-left">Category</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="forecast in results" :key="forecast.date">
-          <td>{{ formatShortDate(forecast.date) }}</td>
-          <td>{{ forecast.temperatureC }}</td>
-          <td>{{ forecast.temperatureF }}</td>
-          <td>{{ forecast.summary }}</td>
+        <tr v-for="item in results.items" :key="item">
+          <td class="col-right">{{ formatShortDate(item.timestamp) }}</td>
+          <td class="col-left">{{ item.payee }}</td>
+          <td class="col-right">{{ item.amount }}</td>
+          <td class="col-left">{{ item.category }}</td>
         </tr>
       </tbody>
     </table>
@@ -61,7 +61,7 @@ export default {
       this.loading = true;
 
       try {
-        const response = await fetch("/weatherforecast");
+        const response = await fetch("/wireapi/Transactions");
         const data = await response.json();
         this.results = data;
       } finally {
@@ -72,4 +72,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.col-right {
+  text-align: right;
+}
+
+.col-left {
+  text-align: left;
+}
+</style>

@@ -3,7 +3,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
     devServer: {
       proxy: {
-        '^/weatherforecast': {
+        '^/wireapi': {
           target: 'http://localhost:5003',
           ws: true,
           changeOrigin: true

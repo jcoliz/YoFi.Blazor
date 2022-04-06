@@ -90,7 +90,7 @@ public class Portfolio: PageTest
         // Then: Five rows of results were loaded
         var rows = locator.Locator("tbody tr");
         var count = await rows.CountAsync();
-        Assert.AreEqual(5,count);
+        Assert.AreEqual(25,count);
 
         await SaveScreenshotAsync();
     }
