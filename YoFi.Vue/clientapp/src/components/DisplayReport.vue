@@ -7,6 +7,7 @@
           <th
             v-for="(column, index) in this.columnLabels"
             :key="`column-${index}`"
+            class="report-col-amount"
           >
             {{ column.isTotal ? "$ TOTAL" : column.name }}
           </th>
