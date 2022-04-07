@@ -1,6 +1,7 @@
 <template>
   <div data-test-id="AboutView" class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
+    <h2 v-if="$route.params.id">{{ $route.params.id }}</h2>
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>

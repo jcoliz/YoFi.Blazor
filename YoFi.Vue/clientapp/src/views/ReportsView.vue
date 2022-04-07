@@ -18,8 +18,18 @@ import DisplayReport from "@/components/DisplayReport.vue";
           v-for="(report, rindex) in group"
           :key="`report-${index}-${rindex}`"
           :data-test-id="`report-${index}-${rindex}`"
+          class="mb-4 row"
         >
-          <DisplayReport v-bind="report" class="mb-4 row"/>
+          <DisplayReport v-bind="report">
+            <div class="d-flex w-100">
+              <router-link 
+                :to="`/report/${report.definition}-detail`"
+                :data-test-id="`${report.definition}-detail`"
+                class="ms-auto btn btn-outline-secondary"
+                ><i class="fas fa-angle-double-right"></i
+              ></router-link>
+            </div>
+          </DisplayReport>
         </div>
       </div>
     </div>

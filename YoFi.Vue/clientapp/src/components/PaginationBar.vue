@@ -26,7 +26,10 @@
         />
         <PageLink :page="page - 1" v-if="page > 1" @new-page="lastUpdate" />
         <li class="page-item active" aria-current="page">
-          <span class="page-link">{{ page }}</span>
+          <span v-if="this.loading" class="page-link">
+            <i class="fas fa-hourglass-half"></i>
+          </span>
+          <span v-else class="page-link">{{ page }}</span>
         </li>
         <PageLink
           :page="page + 1"
@@ -60,7 +63,8 @@ export default {
     firstItem: Number,
     numItems: Number,
     totalPages: Number,
-    totalItems: Number
+    totalItems: Number,
+    loading: Boolean,
   },
   emits: {
     newPage: (p) => {

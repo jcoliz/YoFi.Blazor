@@ -7,14 +7,6 @@ import moment from "moment";
 <template>
   <div data-test-id="TransactionsView">
     <PageNavBar title="Transactions" />
-    <div
-      v-if="this.loading"
-      class="d-flex justify-content-center spinner-container"
-    >
-      <div class="spinner-border my-5" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
     <table
       data-test-id="results"
       className="table table-striped"
@@ -41,7 +33,16 @@ import moment from "moment";
       v-if="this.hasdata"
       v-bind="this.results.pageInfo"
       @new-page="pageUpdate"
+      :loading="this.loading"
     />
+    <div
+      v-if="this.loading"
+      class="d-flex justify-content-center spinner-container"
+    >
+      <div class="spinner-border my-5" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -78,7 +79,6 @@ export default {
   methods: {
     async getList(p) {
       this.loading = true;
-      this.hasdata = false;
 
       try {
         let url = "/wireapi/Transactions";
@@ -122,6 +122,6 @@ export default {
 }
 
 .spinner-container {
-    animation: delayVisibility linear 0.2s; 
+    animation: delayVisibility linear 1s; 
 }
 </style>

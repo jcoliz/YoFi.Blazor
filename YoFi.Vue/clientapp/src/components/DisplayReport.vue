@@ -41,6 +41,7 @@
         </tr>
       </tbody>
     </table>
+    <slot />
   </div>
 </template>
 
