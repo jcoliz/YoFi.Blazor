@@ -64,7 +64,7 @@ export default {
     numItems: Number,
     totalPages: Number,
     totalItems: Number,
-    loading: Boolean,
+    loading: Boolean
   },
   emits: {
     newPage: (p) => {
