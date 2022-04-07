@@ -16,9 +16,9 @@ public class ReportsTests: FunctionalTest
     {
         // When: Navigating to the Reports page
         await WhenNavigatingToPage("Reports");
-
-        // And: Waiting for Reports View to be visible
-        await Page.WaitForSelectorAsync("data-test-id=ReportsView");
+        
+        // And: Waiting for reports to actually be loaded
+        await Page.WaitForSelectorAsync("data-test-id=reports-loaded");
     }
 
     #endregion
@@ -87,11 +87,11 @@ public class ReportsTests: FunctionalTest
 
         // When: Selecting the "all" report from the dropdown
         await Page.ClickAsync("text=Choose a Report");
-        await SaveScreenshotAsync($"{report}-chooser");
         await Page.ClickAsync($"text={report}");
 
         // And: Waiting for the page to fully load
         await Page.WaitForSelectorAsync("data-test-id=DisplayReport");
+        await Page.WaitForLoadStateAsync(state:LoadState.NetworkIdle);
         await SaveScreenshotAsync($"{report}-loaded");
 
         // Then: The expected report is generated

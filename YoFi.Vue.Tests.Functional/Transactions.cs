@@ -22,6 +22,7 @@ public class TransactionsTests: FunctionalTest
         // And: All expected items are here
         var totalitems = await GetTotalItemsAsync();
         Assert.AreEqual(785,totalitems);
+        await SaveScreenshotAsync();
 
         // And: This page covers items 1-25
         await ThenContainsItemsAsync(from: 1, to: 25);
@@ -44,6 +45,7 @@ public class TransactionsTests: FunctionalTest
         // And: Awaiting results to become visible
         var locator = Page.Locator("data-test-id=results");
         await locator.WaitForAsync();
+        await SaveScreenshotAsync();
 
         // Then: This page covers items 26-50
         await ThenContainsItemsAsync(from: 26, to: 50);
@@ -66,6 +68,7 @@ public class TransactionsTests: FunctionalTest
         // And: Awaiting results to become visible
         var locator = Page.Locator("data-test-id=results");
         await locator.WaitForAsync();
+        await SaveScreenshotAsync();
 
         // Then: This page covers items 26-50
         await ThenContainsItemsAsync(from: 776, to: 785);

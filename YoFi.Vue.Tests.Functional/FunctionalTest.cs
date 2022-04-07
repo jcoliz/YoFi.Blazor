@@ -32,7 +32,7 @@ public class FunctionalTest: PageTest
 
         // And: Clicking "{title}" on the navbar
         await Page.ClickAsync($"data-test-id=NavBar >> text={title}");
-        await Page.WaitForLoadStateAsync();
+        await Page.WaitForLoadStateAsync(state:LoadState.NetworkIdle);
 
         // Then: {title} View is visible
         var visible = await Page.IsVisibleAsync($"data-test-id={title}View");

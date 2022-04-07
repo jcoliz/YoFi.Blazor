@@ -36,27 +36,6 @@ public class Portfolio: FunctionalTest
     }
 
     /// <summary>
-    /// [User Can] View the newest (placeholder) Transactions
-    /// </summary>
-    [TestMethod]
-    public async Task _01A_Transactions_Loaded()
-    {
-        // When: Navigating to the Transactions page
-        await WhenNavigatingToPage("Transactions");
-
-        // And: Awaiting results to become visible
-        var locator = Page.Locator("data-test-id=results");
-        await locator.WaitForAsync();
-
-        // Then: Five rows of results were loaded
-        var rows = locator.Locator("tbody tr");
-        var count = await rows.CountAsync();
-        Assert.AreEqual(25,count);
-
-        await SaveScreenshotAsync();
-    }
-
-    /// <summary>
     /// [User Can] Navigate to the Reports Page
     /// </summary>
     [TestMethod]
@@ -64,11 +43,14 @@ public class Portfolio: FunctionalTest
     {
         // When: Navigating to the Reports page
         await WhenNavigatingToPage("Reports");
+        await Page.WaitForLoadStateAsync(state:LoadState.NetworkIdle);
 
         // Then: Reports View is visible
         var visible = await Page.IsVisibleAsync("data-test-id=ReportsView");
         Assert.IsTrue(visible);
 
+        // And: Reports get loaded
+        await Page.WaitForSelectorAsync("data-test-id=reports-loaded");
         await SaveScreenshotAsync();
     }
 
