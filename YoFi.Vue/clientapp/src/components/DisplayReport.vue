@@ -1,5 +1,5 @@
 <template>
-  <div data-test-id="DisplayReport" class="bg-light border p-2" >
+  <div data-test-id="DisplayReport" class="bg-light border p-2">
     <table :data-test-id="`report-${this.definition}`" class="table">
       <thead>
         <tr class="report-header">
@@ -20,7 +20,7 @@
           :class="row.isTotal ? 'report-row-total' : `report-row-${row.level}`"
         >
           <td>
-            {{ this.lines[index].name }}
+            {{ row.isTotal ? "TOTAL" : row.name }}
           </td>
           <td
             v-for="(col, colindex) in this.columnLabels"
