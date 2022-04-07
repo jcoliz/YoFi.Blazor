@@ -9,11 +9,11 @@ import ReportPicker from "@/components/ReportPicker.vue";
     <PageNavBar title="Reports">
         <ReportPicker />
     </PageNavBar>
-    <div v-if="this.hasdata" data-test-id="report-wrapper">
+    <template v-if="this.hasdata">
       <h2>{{ this.report.name }}</h2>
       <h4 v-if="this.report.description">{{ this.report.description }}</h4>
       <DisplayReport v-bind="this.report" />
-    </div>
+    </template>
   </div>
 </template>
 

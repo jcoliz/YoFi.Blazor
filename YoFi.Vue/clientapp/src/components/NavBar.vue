@@ -3,20 +3,20 @@
     data-test-id="NavBar"
     class="navbar navbar-expand-md navbar-dark bg-dark mb-4"
   >
-    <div class="container-fluid">
+    <div data-test-id="contents" class="container-fluid">
       <a class="navbar-brand" href="">YoFi</a>
       <button
+        aria-label="Toggle navigation"
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="#navbarNav"
+        data-bs-target="#navbarMembers"
+        aria-controls="#navbarMembers"
         aria-expanded="false"
-        aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse me-auto" id="navbarNav">
+      <div id="navbarMembers" class="collapse navbar-collapse me-auto">
         <ul class="navbar-nav">
           <slot />
         </ul>

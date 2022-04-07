@@ -3,8 +3,8 @@
     data-test-id="PageNavBar"
     class="navbar navbar-light navbar-page mb-2 px-2"
   >
-    <div class="container-fluid">
-      <span class="navbar-brand h1 mt-1" data-test-id="title">{{ title }}</span>
+    <div data-test-id="contents" class="container-fluid">
+      <span data-test-id="title" class="navbar-brand h1 mt-1">{{ title }}</span>
       <slot />
     </div>
   </nav>

@@ -10,7 +10,7 @@ import ReportPicker from "@/components/ReportPicker.vue";
       <ReportPicker />
     </PageNavBar>
     <h2>Summary</h2>
-    <div data-test-id="reports-wrapper" v-if="this.hasdata" class="row">
+    <div data-test-id="reports-row" v-if="this.hasdata" class="row">
       <div
         v-for="(group, index) in this.results"
         :key="`group-${index}`"
