@@ -1,11 +1,14 @@
 <script setup>
 import PageNavBar from "@/components/PageNavBar.vue";
 import DisplayReport from "@/components/DisplayReport.vue";
+import ReportPicker from "@/components/ReportPicker.vue";
 </script>
 
 <template>
   <div data-test-id="ReportSingleView">
-    <PageNavBar title="Reports" />
+    <PageNavBar title="Reports">
+        <ReportPicker />
+    </PageNavBar>
     <div v-if="this.hasdata" data-test-id="report-wrapper">
       <h2>{{ this.report.name }}</h2>
       <h4 v-if="this.report.description">{{ this.report.description }}</h4>
@@ -20,7 +23,8 @@ export default {
   pageTitle: "Reports",
   components: {
     PageNavBar,
-    DisplayReport
+    DisplayReport,
+    ReportPicker
   },
   data() {
     return {

@@ -1,11 +1,14 @@
 <script setup>
 import PageNavBar from "@/components/PageNavBar.vue";
 import DisplayReport from "@/components/DisplayReport.vue";
+import ReportPicker from "@/components/ReportPicker.vue";
 </script>
 
 <template>
   <div data-test-id="ReportsView">
-    <PageNavBar title="Reports" />
+    <PageNavBar title="Reports">
+      <ReportPicker />
+    </PageNavBar>
     <h2>Summary</h2>
     <div data-test-id="reports-wrapper" v-if="this.hasdata" class="row">
       <div
@@ -22,7 +25,7 @@ import DisplayReport from "@/components/DisplayReport.vue";
         >
           <DisplayReport v-bind="report">
             <div class="d-flex w-100">
-              <router-link 
+              <router-link
                 :to="`/report/${report.definition}-detail`"
                 :data-test-id="`${report.definition}-detail`"
                 class="ms-auto btn btn-outline-secondary"
@@ -42,7 +45,8 @@ export default {
   pageTitle: "Reports",
   components: {
     PageNavBar,
-    DisplayReport
+    DisplayReport,
+    ReportPicker
   },
   data() {
     return {

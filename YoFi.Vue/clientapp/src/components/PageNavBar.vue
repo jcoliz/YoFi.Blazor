@@ -5,6 +5,7 @@
   >
     <div class="container-fluid">
       <span class="navbar-brand h1 mt-1" data-test-id="title">{{ title }}</span>
+      <slot />
     </div>
   </nav>
 </template>
