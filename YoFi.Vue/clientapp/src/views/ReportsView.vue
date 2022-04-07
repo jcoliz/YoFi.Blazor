@@ -19,8 +19,7 @@ import DisplayReport from "@/components/DisplayReport.vue";
           :key="`report-${index}-${rindex}`"
           :data-test-id="`report-${index}-${rindex}`"
         >
-          <h3>{{ report.name }}</h3>
-          <DisplayReport v-bind="report" />
+          <DisplayReport v-bind="report" class="mb-4 row"/>
         </div>
       </div>
     </div>

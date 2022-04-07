@@ -1,6 +1,6 @@
 <template>
-  <div data-test-id="DisplayReport" class="table">
-    <table :data-test-id="`report-${this.definition}`">
+  <div data-test-id="DisplayReport" class="bg-light border p-2" >
+    <table :data-test-id="`report-${this.definition}`" class="table">
       <thead>
         <tr class="report-header">
           <th>{{ this.name }}</th>
