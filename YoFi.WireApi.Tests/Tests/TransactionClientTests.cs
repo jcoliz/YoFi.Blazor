@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using YoFi.Tests.Integration.Helpers;
 
-namespace YoFi.WireApi.Tests
+namespace YoFi.WireApi.Tests.Integration
 {
     [TestClass]
     public class TransactionClientTests: IntegrationTests

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.WireApi", "YoFi.WireAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.WireApi.Host", "YoFi.WireApi.Host\YoFi.WireApi.Host.csproj", "{00DCE3A0-B3D3-4A9B-B2E1-811F217C2F8F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.WireApi.Tests", "YoFi.WireApi.Tests\YoFi.WireApi.Tests.csproj", "{0A21C198-40B4-4CA8-B128-2D9FE1579EB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.WireApi.Tests.Integration", "YoFi.WireApi.Tests\YoFi.WireApi.Tests.Integration.csproj", "{0A21C198-40B4-4CA8-B128-2D9FE1579EB8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YoFi.Blazor.Client", "YoFi.Blazor.Client\YoFi.Blazor.Client.csproj", "{00F7E21A-7C46-41F1-9009-711011804A73}"
 EndProject
