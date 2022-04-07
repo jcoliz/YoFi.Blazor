@@ -10,9 +10,9 @@ import ReportPicker from "@/components/ReportPicker.vue";
       <ReportPicker :definitions="this.definitions" />
     </PageNavBar>
     <template v-if="this.hasdata">
-      <h2>{{ this.report.name }}</h2>
-      <h4 v-if="this.report.description">{{ this.report.description }}</h4>
-      <DisplayReport v-bind="this.report" />
+      <h2 class="px-1">{{ this.report.name }}</h2>
+      <h4 v-if="this.report.description" class="px-1">{{ this.report.description }}</h4>
+      <DisplayReport v-bind="this.report" class="mt-4" />
     </template>
   </div>
 </template>

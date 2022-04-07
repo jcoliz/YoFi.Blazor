@@ -1,7 +1,7 @@
 <template>
   <nav
     data-test-id="PageNavBar"
-    class="navbar navbar-light navbar-page mb-2 px-2"
+    class="navbar navbar-light navbar-page mb-3 px-2"
   >
     <div data-test-id="contents" class="container-fluid">
       <span data-test-id="title" class="navbar-brand h1 mt-1">{{ title }}</span>
