@@ -36,7 +36,7 @@ public class Portfolio: PageTest
         await Page.GotoAsync(TestContext.Properties["webAppUrl"] as string);
 
         // And: Clicking "{title}" on the navbar
-        await Page.ClickAsync($"#navbarNav >> text={title}");
+        await Page.ClickAsync($"data-test-id=NavBar >> text={title}");
         await Page.WaitForLoadStateAsync();
 
         // Then: {title} View is visible
