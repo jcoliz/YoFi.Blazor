@@ -7,7 +7,7 @@ import ReportPicker from "@/components/ReportPicker.vue";
 <template>
   <div data-test-id="ReportSingleView">
     <PageNavBar title="Reports">
-        <ReportPicker />
+      <ReportPicker :definitions="this.definitions" />
     </PageNavBar>
     <template v-if="this.hasdata">
       <h2>{{ this.report.name }}</h2>
@@ -31,6 +31,7 @@ export default {
       loading: false,
       hasdata: false,
       slug: "",
+      definitions: {},
       report: {}
     };
   },
@@ -64,6 +65,12 @@ export default {
         const data = await response.json();
         this.report = data;
         this.hasdata = true;
+
+        url = "/wireapi/Reports";
+        const response2 = await fetch(url);
+        const data2 = await response2.json();
+        this.definitions = data2;
+
       } finally {
         this.loading = false;
       }

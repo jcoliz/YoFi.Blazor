@@ -5,7 +5,7 @@
       <NavItemLink title="Reports" link="/reports" />
       <NavItemLink title="About" link="/about" />
     </NavBar>
-    <router-view class="container" />
+    <router-view :key='$route.fullPath' class="container" />
   </div>
 </template>
 
