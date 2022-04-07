@@ -45,6 +45,12 @@ public class FunctionalTest: PageTest
         Assert.AreEqual(to.ToString(), await Page.TextContentAsync("data-test-id=lastitem"));
     }
 
+    protected async Task ThenH2Is(string expected)
+    {
+        var content = await Page.TextContentAsync("h2");
+        Assert.AreEqual(expected, content);
+    }
+
     protected async Task<int> GetTotalItemsAsync() => await GetNumberAsync("data-test-id=totalitems");
 
     protected async Task<int> GetNumberAsync(string selector)
