@@ -60,6 +60,7 @@ import moment from "moment";
       </div>
     </div>
     <DialogModal id="createModal" title="Create Transaction" />
+    <DialogModal id="helpModal" title="Help Topic" />
   </div>
 </template>
 
