@@ -5,6 +5,7 @@ import PageActions from "@/components/PageActions.vue";
 import RowActions from "@/components/RowActions.vue";
 import DialogModal from "@/components/DialogModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import TransactionEditDialog from "@/components/TransactionEditDialog.vue";
 import moment from "moment";
 </script>
 
@@ -21,6 +22,19 @@ import moment from "moment";
         >
       </PageActions>
     </PageNavBar>
+    <div data-test-id="temp-tx-edit" v-if="this.focusItemIndex">
+      <h2>Edit Transaction</h2>
+      <TransactionEditDialog
+        v-bind="this.results.items[this.focusItemIndex - 1]"
+      />
+      <button
+        type="button"
+        class="btn btn-outline-secondary me-2 my-2"
+      >
+        Cancel
+      </button>
+      <button type="button" class="btn btn-primary my-2">Save</button>
+    </div>
     <table
       data-test-id="results"
       className="table table-striped"
@@ -35,13 +49,13 @@ import moment from "moment";
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in results.items" :key="item">
+        <tr v-for="(item, rowindex) in results.items" :key="item">
           <td class="col-right">{{ formatShortDate(item.timestamp) }}</td>
           <td class="col-left">{{ item.payee }}</td>
           <td class="col-right">{{ item.amount }}</td>
           <td class="col-left">{{ item.category }}</td>
           <td class="col-right">
-            <RowActions :item="item.id" @actionClicked="this.actionGo" />
+            <RowActions :item="rowindex" @actionClicked="this.actionGo" />
           </td>
         </tr>
       </tbody>
@@ -54,6 +68,12 @@ import moment from "moment";
     />
     <LoadingSpinner v-if="this.loading" />
     <DialogModal id="createModal" title="Create Transaction" />
+    <DialogModal id="editModal" ref="editModal" title="Edit Transaction">
+      <TransactionEditDialog
+        v-if="this.focusItemIndex"
+        v-bind="this.results.items[this.focusItemIndex - 1]"
+      />
+    </DialogModal>
     <DialogModal id="helpModal" title="Help Topic" />
   </div>
 </template>
@@ -68,12 +88,14 @@ export default {
     PageActions,
     RowActions,
     DialogModal,
-    LoadingSpinner
+    LoadingSpinner,
+    TransactionEditDialog
   },
   data() {
     return {
       loading: false,
       hasdata: false,
+      focusItemIndex: 0,
       results: {}
     };
   },
@@ -110,8 +132,11 @@ export default {
     pageUpdate(p) {
       this.getList(p);
     },
-    actionGo(i,action) {
-      console.info("RowActions: " + i + " " + action);
+    actionGo(i, action) {
+      console.info(`RowActions: ${i} ${action}`);
+      let item = this.results.items[i];
+      console.info(item);
+      this.focusItemIndex = 1 + i;
     }
   }
 };

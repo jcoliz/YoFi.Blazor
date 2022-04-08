@@ -41,7 +41,7 @@ export default {
   },
   emits: {
     actionClicked: (which, action) => {
-      return which > 0 && action;
+      return which >= 0 && action;
     }
   }
 };
