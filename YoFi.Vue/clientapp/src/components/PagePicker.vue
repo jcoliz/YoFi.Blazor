@@ -3,7 +3,7 @@ import PageItemLink from "@/components/PageItemLink.vue";
 </script>
 
 <template>
-  <div data-test-id="PaginationBar" class="mt-2 row">
+  <div data-test-id="PagePicker" class="mt-2 row">
     <div class="col-sm-7">
       <p class="fs-6">
         Displaying

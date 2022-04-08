@@ -49,7 +49,7 @@ public class ReportsTests: FunctionalTest
         await Page.ClickAsync($"data-test-id={report}-detail");
 
         // And: Waiting for the page to fully load
-        await Page.WaitForSelectorAsync("data-test-id=DisplayReport");
+        await Page.WaitForSelectorAsync("data-test-id=ReportDisplay");
         await SaveScreenshotAsync(report);
 
         // Then: The total on the detailed report is the same as in the summary
@@ -90,7 +90,7 @@ public class ReportsTests: FunctionalTest
         await Page.ClickAsync($"text={report}");
 
         // And: Waiting for the page to fully load
-        await Page.WaitForSelectorAsync("data-test-id=DisplayReport");
+        await Page.WaitForSelectorAsync("data-test-id=ReportDisplay");
         await Page.WaitForLoadStateAsync(state:LoadState.NetworkIdle);
         await SaveScreenshotAsync($"{report}-loaded");
 

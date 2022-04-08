@@ -1,6 +1,6 @@
 <script setup>
 import PageNavBar from "@/components/PageNavBar.vue";
-import PaginationBar from "@/components/PaginationBar.vue";
+import PagePicker from "@/components/PagePicker.vue";
 import PageActions from "@/components/PageActions.vue";
 import moment from "moment";
 </script>
@@ -32,7 +32,7 @@ import moment from "moment";
         </tr>
       </tbody>
     </table>
-    <PaginationBar
+    <PagePicker
       v-if="this.hasdata"
       v-bind="this.results.pageInfo"
       @new-page="pageUpdate"
@@ -55,7 +55,7 @@ export default {
   pageTitle: "Transactions",
   components: {
     PageNavBar,
-    PaginationBar,
+    PagePicker,
     PageActions
   },
   data() {
