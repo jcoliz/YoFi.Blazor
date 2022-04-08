@@ -41,7 +41,7 @@ import moment from "moment";
           <td class="col-right">{{ item.amount }}</td>
           <td class="col-left">{{ item.category }}</td>
           <td class="col-right">
-            <RowActions />
+            <RowActions :item="item.id" @actionClicked="this.actionGo" />
           </td>
         </tr>
       </tbody>
@@ -109,6 +109,9 @@ export default {
     },
     pageUpdate(p) {
       this.getList(p);
+    },
+    actionGo(i,action) {
+      console.info("RowActions: " + i + " " + action);
     }
   }
 };
