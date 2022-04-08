@@ -4,6 +4,7 @@ import PagePicker from "@/components/PagePicker.vue";
 import PageActions from "@/components/PageActions.vue";
 import RowActions from "@/components/RowActions.vue";
 import DialogModal from "@/components/DialogModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import moment from "moment";
 </script>
 
@@ -51,14 +52,7 @@ import moment from "moment";
       @new-page="pageUpdate"
       :loading="this.loading"
     />
-    <div
-      v-if="this.loading"
-      class="d-flex justify-content-center spinner-container"
-    >
-      <div class="spinner-border my-5" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
+    <LoadingSpinner v-if="this.loading" />
     <DialogModal id="createModal" title="Create Transaction" />
     <DialogModal id="helpModal" title="Help Topic" />
   </div>
@@ -73,7 +67,8 @@ export default {
     PagePicker,
     PageActions,
     RowActions,
-    DialogModal
+    DialogModal,
+    LoadingSpinner
   },
   data() {
     return {
@@ -126,23 +121,5 @@ export default {
 
 .col-left {
   text-align: left;
-}
-
-@keyframes delayVisibility {
-  0% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-.spinner-container {
-  animation: delayVisibility linear 1s;
 }
 </style>
