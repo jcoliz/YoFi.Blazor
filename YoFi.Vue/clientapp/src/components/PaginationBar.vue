@@ -1,5 +1,5 @@
 <script setup>
-import PageLink from "@/components/PageLink.vue";
+import PageItemLink from "@/components/PageItemLink.vue";
 </script>
 
 <template>
@@ -17,40 +17,40 @@ import PageLink from "@/components/PageLink.vue";
     </div>
     <nav class="col-sm-5" aria-label="Pagination control">
       <ul class="pagination justify-content-end">
-        <PageLink
+        <PageItemLink
           :page="1"
           v-if="page > 2 && totalPages > 3"
           @new-page="lastUpdate"
-          >&laquo;</PageLink
+          >&laquo;</PageItemLink
         >
-        <PageLink
+        <PageItemLink
           :page="page - 2"
           v-if="page == totalPages && totalPages > 2"
           @new-page="lastUpdate"
         />
-        <PageLink :page="page - 1" v-if="page > 1" @new-page="lastUpdate" />
+        <PageItemLink :page="page - 1" v-if="page > 1" @new-page="lastUpdate" />
         <li class="page-item active" aria-current="page">
           <span v-if="this.loading" class="page-link">
             <i class="fas fa-hourglass-half"></i>
           </span>
           <span v-else class="page-link">{{ page }}</span>
         </li>
-        <PageLink
+        <PageItemLink
           :page="page + 1"
           v-if="page < totalPages"
           @new-page="lastUpdate"
         />
-        <PageLink
+        <PageItemLink
           :page="page + 2"
           v-if="page == 1 && totalPages > 2"
           @new-page="lastUpdate"
         />
-        <PageLink
+        <PageItemLink
           :page="totalPages"
           label="Last Page"
           v-if="page + 1 < totalPages && totalPages > 3"
           @new-page="lastUpdate"
-          >&raquo;</PageLink
+          >&raquo;</PageItemLink
         >
       </ul>
     </nav>
@@ -81,7 +81,7 @@ export default {
     }
   },
   components: {
-    PageLink
+    PageItemLink
   }
 };
 </script>

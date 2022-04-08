@@ -1,5 +1,5 @@
 <template>
-  <div data-test-id="DisplayReport" class="bg-light border p-2">
+  <div data-test-id="ReportDisplay" class="bg-light border p-2">
     <table :data-test-id="`report-${this.definition}`" class="table">
       <thead>
         <tr class="report-header">
