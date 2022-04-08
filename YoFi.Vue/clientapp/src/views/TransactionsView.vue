@@ -3,13 +3,22 @@ import PageNavBar from "@/components/PageNavBar.vue";
 import PagePicker from "@/components/PagePicker.vue";
 import PageActions from "@/components/PageActions.vue";
 import RowActions from "@/components/RowActions.vue";
+import DialogModal from "@/components/DialogModal.vue";
 import moment from "moment";
 </script>
 
 <template>
   <div data-test-id="TransactionsView">
     <PageNavBar title="Transactions">
-      <PageActions />
+      <PageActions>
+        <a
+          href="#"
+          data-bs-toggle="modal"
+          data-bs-target="#createModal"
+          class="btn"
+          >Create New</a
+        >
+      </PageActions>
     </PageNavBar>
     <table
       data-test-id="results"
@@ -50,6 +59,7 @@ import moment from "moment";
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
+    <DialogModal id="createModal" title="Create Transaction" />
   </div>
 </template>
 
@@ -61,7 +71,8 @@ export default {
     PageNavBar,
     PagePicker,
     PageActions,
-    RowActions
+    RowActions,
+    DialogModal
   },
   data() {
     return {
@@ -117,20 +128,20 @@ export default {
 }
 
 @keyframes delayVisibility {
-    0% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
 
-    50% {
-        opacity: 0;
-    }
+  50% {
+    opacity: 0;
+  }
 
-    100% {
-        opacity: 1;
-    }
+  100% {
+    opacity: 1;
+  }
 }
 
 .spinner-container {
-    animation: delayVisibility linear 1s; 
+  animation: delayVisibility linear 1s;
 }
 </style>
