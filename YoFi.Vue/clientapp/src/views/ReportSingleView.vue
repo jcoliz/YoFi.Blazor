@@ -1,6 +1,6 @@
 <script setup>
 import PageNavBar from "@/components/PageNavBar.vue";
-import DisplayReport from "@/components/DisplayReport.vue";
+import ReportDisplay from "@/components/ReportDisplay.vue";
 import ReportPicker from "@/components/ReportPicker.vue";
 import PageActions from "@/components/PageActions.vue";
 </script>
@@ -14,7 +14,7 @@ import PageActions from "@/components/PageActions.vue";
     <template v-if="this.hasdata">
       <h2 class="px-1">{{ this.report.name }}</h2>
       <h4 v-if="this.report.description" class="px-1">{{ this.report.description }}</h4>
-      <DisplayReport v-bind="this.report" class="mt-4" />
+      <ReportDisplay v-bind="this.report" class="mt-4" />
     </template>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   pageTitle: "Reports",
   components: {
     PageNavBar,
-    DisplayReport,
+    ReportDisplay,
     ReportPicker,
     PageActions
   },

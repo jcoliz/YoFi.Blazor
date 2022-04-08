@@ -1,6 +1,6 @@
 <script setup>
 import PageNavBar from "@/components/PageNavBar.vue";
-import DisplayReport from "@/components/DisplayReport.vue";
+import ReportDisplay from "@/components/ReportDisplay.vue";
 import ReportPicker from "@/components/ReportPicker.vue";
 import PageActions from "@/components/PageActions.vue";
 </script>
@@ -25,7 +25,7 @@ import PageActions from "@/components/PageActions.vue";
           :data-test-id="`report-${index}-${rindex}`"
           class="mb-4 row"
         >
-          <DisplayReport v-bind="report">
+          <ReportDisplay v-bind="report">
             <div class="d-flex w-100">
               <router-link
                 :to="`/report/${report.definition}-detail`"
@@ -34,7 +34,7 @@ import PageActions from "@/components/PageActions.vue";
                 ><i class="fas fa-angle-double-right"></i
               ></router-link>
             </div>
-          </DisplayReport>
+          </ReportDisplay>
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@ export default {
   pageTitle: "Reports",
   components: {
     PageNavBar,
-    DisplayReport,
+    ReportDisplay,
     ReportPicker,
     PageActions
   },
