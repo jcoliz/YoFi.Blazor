@@ -2,6 +2,7 @@
 import PageNavBar from "@/components/PageNavBar.vue";
 import PagePicker from "@/components/PagePicker.vue";
 import PageActions from "@/components/PageActions.vue";
+import RowActions from "@/components/RowActions.vue";
 import moment from "moment";
 </script>
 
@@ -29,6 +30,9 @@ import moment from "moment";
           <td class="col-left">{{ item.payee }}</td>
           <td class="col-right">{{ item.amount }}</td>
           <td class="col-left">{{ item.category }}</td>
+          <td class="col-right">
+            <RowActions />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -56,7 +60,8 @@ export default {
   components: {
     PageNavBar,
     PagePicker,
-    PageActions
+    PageActions,
+    RowActions
   },
   data() {
     return {
