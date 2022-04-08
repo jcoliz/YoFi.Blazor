@@ -2,12 +2,14 @@
 import PageNavBar from "@/components/PageNavBar.vue";
 import DisplayReport from "@/components/DisplayReport.vue";
 import ReportPicker from "@/components/ReportPicker.vue";
+import PageActions from "@/components/PageActions.vue";
 </script>
 
 <template>
   <div data-test-id="ReportSingleView">
     <PageNavBar title="Reports">
       <ReportPicker :definitions="this.definitions" />
+      <PageActions />
     </PageNavBar>
     <template v-if="this.hasdata">
       <h2 class="px-1">{{ this.report.name }}</h2>
@@ -24,7 +26,8 @@ export default {
   components: {
     PageNavBar,
     DisplayReport,
-    ReportPicker
+    ReportPicker,
+    PageActions
   },
   data() {
     return {

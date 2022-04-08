@@ -1,12 +1,15 @@
 <script setup>
 import PageNavBar from "@/components/PageNavBar.vue";
 import PaginationBar from "@/components/PaginationBar.vue";
+import PageActions from "@/components/PageActions.vue";
 import moment from "moment";
 </script>
 
 <template>
   <div data-test-id="TransactionsView">
-    <PageNavBar title="Transactions" />
+    <PageNavBar title="Transactions">
+      <PageActions />
+    </PageNavBar>
     <table
       data-test-id="results"
       className="table table-striped"
@@ -52,7 +55,8 @@ export default {
   pageTitle: "Transactions",
   components: {
     PageNavBar,
-    PaginationBar
+    PaginationBar,
+    PageActions
   },
   data() {
     return {

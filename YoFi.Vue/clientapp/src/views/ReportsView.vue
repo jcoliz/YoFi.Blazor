@@ -2,12 +2,14 @@
 import PageNavBar from "@/components/PageNavBar.vue";
 import DisplayReport from "@/components/DisplayReport.vue";
 import ReportPicker from "@/components/ReportPicker.vue";
+import PageActions from "@/components/PageActions.vue";
 </script>
 
 <template>
   <div data-test-id="ReportsView">
     <PageNavBar title="Reports">
       <ReportPicker :definitions="this.definitions" />
+      <PageActions />
     </PageNavBar>
     <h2>Summary</h2>
     <div data-test-id="reports-loaded" v-if="this.hasdata" class="row">
@@ -46,7 +48,8 @@ export default {
   components: {
     PageNavBar,
     DisplayReport,
-    ReportPicker
+    ReportPicker,
+    PageActions
   },
   data() {
     return {

@@ -1,3 +1,7 @@
+<script setup>
+import PageLink from "@/components/PageLink.vue";
+</script>
+
 <template>
   <div data-test-id="PaginationBar" class="mt-2 row">
     <div class="col-sm-7">
@@ -54,7 +58,6 @@
 </template>
 
 <script>
-import PageLink from "@/components/PageLink.vue";
 export default {
   name: "PaginationBar",
   props: {
