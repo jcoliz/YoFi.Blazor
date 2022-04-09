@@ -6,6 +6,7 @@ import RowActions from "@/components/RowActions.vue";
 import DialogModal from "@/components/DialogModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import TransactionEditDialog from "@/components/TransactionEditDialog.vue";
+import Modal from "bootstrap";
 import moment from "moment";
 </script>
 
@@ -13,13 +14,7 @@ import moment from "moment";
   <div data-test-id="TransactionsView">
     <PageNavBar title="Transactions">
       <PageActions>
-        <a
-          href="#"
-          data-bs-toggle="modal"
-          data-bs-target="#createModal"
-          class="btn"
-          >Create New</a
-        >
+        <a @click="this.showCreateModal = true" class="btn">Create New</a>
       </PageActions>
     </PageNavBar>
     <div data-test-id="temp-tx-edit" v-if="this.focusItemIndex">
@@ -27,10 +22,7 @@ import moment from "moment";
       <TransactionEditDialog
         v-bind="this.results.items[this.focusItemIndex - 1]"
       />
-      <button
-        type="button"
-        class="btn btn-outline-secondary me-2 my-2"
-      >
+      <button type="button" class="btn btn-outline-secondary me-2 my-2">
         Cancel
       </button>
       <button type="button" class="btn btn-primary my-2">Save</button>
@@ -67,14 +59,24 @@ import moment from "moment";
       :loading="this.loading"
     />
     <LoadingSpinner v-if="this.loading" />
-    <DialogModal id="createModal" title="Create Transaction" />
-    <DialogModal id="editModal" ref="editModal" title="Edit Transaction">
+    <DialogModal
+      id="createModal"
+      title="Create Transaction"
+      :visible="this.showCreateModal"
+      @click="this.showCreateModal = false"
+    />
+    <DialogModal
+      v-if="false"
+      id="editModal"
+      ref="editModal"
+      title="Edit Transaction"
+    >
       <TransactionEditDialog
         v-if="this.focusItemIndex"
         v-bind="this.results.items[this.focusItemIndex - 1]"
       />
     </DialogModal>
-    <DialogModal id="helpModal" title="Help Topic" />
+    <DialogModal v-if="false" id="helpModal" title="Help Topic" />
   </div>
 </template>
 
@@ -96,7 +98,9 @@ export default {
       loading: false,
       hasdata: false,
       focusItemIndex: 0,
-      results: {}
+      showCreateModal: false,
+      results: {},
+      modal: {}
     };
   },
   async beforeCreate() {
@@ -132,11 +136,16 @@ export default {
     pageUpdate(p) {
       this.getList(p);
     },
-    actionGo(i, action) {
+    async actionGo(i, action) {
       console.info(`RowActions: ${i} ${action}`);
       let item = this.results.items[i];
       console.info(item);
       this.focusItemIndex = 1 + i;
+      console.info(this.$refs);
+      console.info(this.$refs.createModal);
+      console.info(this.$refs.createModal.el);
+      var modal = new Modal(this.$refs.createModal);
+      modal.show();
     }
   }
 };

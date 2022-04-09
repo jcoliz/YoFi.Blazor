@@ -1,15 +1,22 @@
 <template>
-  <div data-test-id="DialogModal" class="modal modal-fade" tabindex="-1">
+  <div
+    data-test-id="DialogModal"
+    v-if="isOpen"
+    class="modal fade show"
+    tabindex="-1"
+    style="display: block"
+  >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <slot name="header">
-            <h5 class="modal-title">{{this.$props.title}}</h5>
+            <h5 class="modal-title">{{ this.$props.title }}</h5>
             <button
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              @click="$emit('close')"
             ></button>
           </slot>
         </div>
@@ -22,6 +29,7 @@
               type="button"
               class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
+              @click="$emit('close')"
             >
               Cancel
             </button>
@@ -38,10 +46,18 @@ export default {
   name: "DialogModal",
   props: {
     title: String,
+    visible: Boolean
   },
-  emits: {
-    newPage: (p) => {
-      return p > 0;
+  data() {
+    return {
+      isOpen: this.visible
+    };
+  },
+  emits: ["close"],
+  watch: {
+    visible: function (newVal, oldVal) {
+      this.isOpen = newVal;
+      console.log(`DialogModal: visible now ${newVal} was ${oldVal}`);
     }
   }
 };
