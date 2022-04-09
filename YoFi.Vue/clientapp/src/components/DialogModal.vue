@@ -42,18 +42,6 @@
 <script>
 import { Modal } from "bootstrap";
 
-//
-// This is ALMOST exactly right. The problem is that if you click on the back
-// drop, the dialog will close itself but the 'show' property stays true, so
-// you can't re-open it. The idea is to
-//
-//    this.modalElement.addEventListener('hide.bs.modal', this.$emit('close'));
-//
-// But this gives an error:
-//
-//    Uncaught (in promise) TypeError: this.modalElement.addEventListener is not a function
-//
-
 export default {
   name: "DialogModal",
   props: {
