@@ -10,7 +10,6 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-              @click="this.$emit('close')"
             ></button>
           </slot>
         </div>
@@ -23,7 +22,6 @@
               type="button"
               class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
-              @click="this.$emit('close')"
             >
               Cancel
             </button>
@@ -31,7 +29,6 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="this.$emit('close')"
             >
               Save
             </button>
