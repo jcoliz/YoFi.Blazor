@@ -62,8 +62,9 @@ import moment from "moment";
     <DialogModal
       id="createModal"
       title="Create Transaction"
-      :visible="this.showCreateModal"
-      @click="this.showCreateModal = false"
+      v-if="this.showCreateModal"
+      :show="this.showCreateModal"
+      @close="this.showCreateModal = false"
     />
     <DialogModal
       v-if="false"

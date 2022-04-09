@@ -1,11 +1,5 @@
 <template>
-  <div
-    data-test-id="DialogModal"
-    v-if="isOpen"
-    class="modal fade show"
-    tabindex="-1"
-    style="display: block"
-  >
+  <div data-test-id="DialogModal" class="modal fade" ref="rootelement">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -16,7 +10,7 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
-              @click="$emit('close')"
+              @click="this.$emit('close')"
             ></button>
           </slot>
         </div>
@@ -29,11 +23,18 @@
               type="button"
               class="btn btn-outline-secondary"
               data-bs-dismiss="modal"
-              @click="$emit('close')"
+              @click="this.$emit('close')"
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-primary">Save</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              @click="this.$emit('close')"
+            >
+              Save
+            </button>
           </slot>
         </div>
       </div>
@@ -42,24 +43,54 @@
 </template>
 
 <script>
+import { Modal } from "bootstrap";
+
+//
+// This is ALMOST exactly right. The problem is that if you click on the back
+// drop, the dialog will close itself but the 'show' property stays true, so
+// you can't re-open it. The idea is to
+//
+//    this.modalElement.addEventListener('hide.bs.modal', this.$emit('close'));
+//
+// But this gives an error:
+//
+//    Uncaught (in promise) TypeError: this.modalElement.addEventListener is not a function
+//
+
 export default {
   name: "DialogModal",
   props: {
     title: String,
-    visible: Boolean
+    show: {
+      default: false,
+      required: false,
+      type: Boolean
+    }
   },
   data() {
     return {
-      isOpen: this.visible
+      modalElement: null
     };
   },
-  emits: ["close"],
-  watch: {
-    visible: function (newVal, oldVal) {
-      this.isOpen = newVal;
-      console.log(`DialogModal: visible now ${newVal} was ${oldVal}`);
+  async mounted() {
+    this.modalElement = new Modal(this.$refs.rootelement);
+
+    this.modalElement._element.addEventListener("hide.bs.modal", () => {
+      this.$emit("close");
+    });
+
+    if (this.show) {
+      this.modalElement.show();
     }
-  }
+  },
+  watch: {
+    show(show) {
+      if (this.modalElement) {
+        show ? this.modalElement.show() : this.modalElement.hide();
+      }
+    }
+  },
+  emits: ["close"]
 };
 </script>
 
