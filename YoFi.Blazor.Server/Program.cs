@@ -1,9 +1,10 @@
 using Common.DotNet;
 using Microsoft.EntityFrameworkCore;
-using YoFi.Blazor.Server.Data;
 using YoFi.Core;
 using YoFi.Core.Reports;
 using YoFi.Core.Repositories;
+using YoFi.Data;
+using YoFi.Data.SampleData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IClock>(new SystemClock());
-builder.Services.AddScoped<IDataContext, ApplicationDbContext>();
+builder.Services.AddScoped<IDataProvider, ApplicationDbContext>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IReportEngine, ReportBuilder>();
 

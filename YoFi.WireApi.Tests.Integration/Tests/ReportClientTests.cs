@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using YoFi.Data.SampleData;
 using YoFi.Tests.Integration.Helpers;
 
 namespace YoFi.WireApi.Tests.Integration
@@ -13,7 +11,7 @@ namespace YoFi.WireApi.Tests.Integration
         #region Fields
 
         WireApi.Client.WireApiClient wireapi;
-        private const int sampledatayear = 2021;
+        private const int sampledatayear = 2022;
 
         #endregion
 
@@ -67,7 +65,7 @@ namespace YoFi.WireApi.Tests.Integration
 
             // Then: Expected report is returned
             Assert.AreEqual(name, result.Definition);
-            Assert.AreEqual(19908.15m, (decimal)result.GrandTotal);
+            Assert.AreEqual(18389.23m, (decimal)result.GrandTotal);
         }
 
         [TestMethod]
@@ -123,8 +121,8 @@ namespace YoFi.WireApi.Tests.Integration
             Assert.AreEqual(3, result.Last().Count);
 
             // Totals as expected (Note that OpenAPI has no fixed point (decimal) data type)
-            Assert.AreEqual(31509.36m, (decimal)result.First().Last().GrandTotal);
-            Assert.AreEqual(5629.74m, (decimal)result.Last().Last().GrandTotal);
+            Assert.AreEqual(30309.36m, (decimal)result.First().Last().GrandTotal);
+            Assert.AreEqual(10972.65m, (decimal)result.Last().Last().GrandTotal);
         }
 
         #endregion

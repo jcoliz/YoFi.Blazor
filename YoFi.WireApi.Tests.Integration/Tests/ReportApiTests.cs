@@ -1,10 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text.Json;
-using System.Threading.Tasks;
 using YoFi.Core.Reports;
+using YoFi.Data.SampleData;
 using YoFi.Tests.Integration.Helpers;
 
 namespace YoFi.WireApi.Tests.Integration
@@ -14,7 +13,7 @@ namespace YoFi.WireApi.Tests.Integration
     {
         #region Fields
 
-        private const int sampledatayear = 2021;
+        private const int sampledatayear = 2022;
 
         #endregion
 
@@ -32,7 +31,7 @@ namespace YoFi.WireApi.Tests.Integration
             integrationcontext = new IntegrationContext(tcontext.FullyQualifiedTestClassName);
 
             await SampleDataStore.LoadFullAsync();
-            data = SampleDataStore.Single;
+            var data = SampleDataStore.Single;
 
             context.Transactions.AddRange(data.Transactions);
             context.BudgetTxs.AddRange(data.BudgetTxs);
@@ -72,7 +71,7 @@ namespace YoFi.WireApi.Tests.Integration
             var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync());
             var actual = JsonSerializer.Deserialize<WireReport>(document, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
             Assert.AreEqual(name, actual.Definition);
-            Assert.AreEqual(19908.15m, actual.GrandTotal);
+            Assert.AreEqual(18389.23m, actual.GrandTotal);
         }
 
         [TestMethod]
@@ -128,8 +127,8 @@ namespace YoFi.WireApi.Tests.Integration
             Assert.AreEqual(3, actual[1].Count);
 
             // Totals as expected
-            Assert.AreEqual(31509.36m, actual[0].Last().GrandTotal);
-            Assert.AreEqual(5629.74m, actual[1].Last().GrandTotal);
+            Assert.AreEqual(30309.36m, actual[0].Last().GrandTotal);
+            Assert.AreEqual(10972.65m, actual[1].Last().GrandTotal);
         }
 
         #endregion

@@ -7,14 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="SampleData\FullSampleData.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="SampleData\FullSampleData.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="jcoliz.FakeObjects" Version="1.0.0" />
     <PackageReference Include="jcoliz.OpenOfficeXml.Serializer" Version="1.0.2" />

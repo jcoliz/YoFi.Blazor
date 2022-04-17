@@ -74,7 +74,7 @@ export default {
         let parameters = {
           slug: "summary",
           month: 1,
-          year: 2021
+          year: 2022
         };
         let url = "/wireapi/Reports/Summary";
         const response = await fetch(url, {

@@ -6,14 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Data\FullSampleData.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Data\FullSampleData.json" />
-  </ItemGroup>
-
-  <ItemGroup>
 	<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.3" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.3" />
@@ -21,6 +13,7 @@
 
   <ItemGroup>
 	<ProjectReference Include="..\submodules\YoFi\YoFi.Core\YoFi.Core.csproj" />
+	<ProjectReference Include="..\submodules\YoFi\YoFi.Data\YoFi.Data.csproj" />
 	<ProjectReference Include="..\YoFi.WireApi\YoFi.WireApi.csproj" />
 	<ProjectReference Include="..\YoFi.Blazor.Client\YoFi.Blazor.Client.csproj" />
   </ItemGroup>

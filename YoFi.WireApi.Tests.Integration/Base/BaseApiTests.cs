@@ -13,7 +13,6 @@ namespace YoFi.WireApi.Tests
     {
         #region Fields
 
-        protected static SampleDataStore data;
         protected abstract string urlroot { get; set; }
 
         #endregion
