@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using YoFi.Core.Models;
 using YoFi.Tests.Integration.Helpers;
-using YoFi.WireApi.Host.Data;
+using YoFi.Data;
 
 namespace YoFi.WireApi.Tests
 {

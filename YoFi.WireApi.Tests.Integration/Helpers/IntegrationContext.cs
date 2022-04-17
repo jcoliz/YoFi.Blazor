@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
-using YoFi.WireApi.Host.Data;
+using YoFi.Data;
 
 namespace YoFi.Tests.Integration.Helpers
 {

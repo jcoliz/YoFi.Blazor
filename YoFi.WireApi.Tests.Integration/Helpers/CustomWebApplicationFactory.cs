@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using YoFi.Core;
-using YoFi.WireApi.Host.Data;
+using YoFi.Data;
 
 namespace YoFi.Tests.Integration.Helpers
 {
@@ -29,7 +29,7 @@ namespace YoFi.Tests.Integration.Helpers
                 {
                     options.UseInMemoryDatabase(DatabaseName);
                 });
-                services.AddScoped<IDataContext, ApplicationDbContext>();
+                services.AddScoped<IDataProvider, ApplicationDbContext>();
 
                 var sp = services.BuildServiceProvider();
 
