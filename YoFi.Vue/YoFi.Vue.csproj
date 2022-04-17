@@ -21,15 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\submodules\YoFi\YoFi.Core\YoFi.Core.csproj" />
+    <ProjectReference Include="..\submodules\YoFi\YoFi.Data\YoFi.Data.csproj" />
     <ProjectReference Include="..\YoFi.WireApi\YoFi.WireApi.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Data\FullSampleData.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Data\FullSampleData.json" />
   </ItemGroup>
 
   <ItemGroup>

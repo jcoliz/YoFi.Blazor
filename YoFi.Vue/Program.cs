@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using YoFi.Core;
 using YoFi.Core.Reports;
 using YoFi.Core.Repositories;
-using YoFi.Vue.Data;
+using YoFi.Data;
+using YoFi.Data.SampleData;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerDocument( o => { o.UseRouteNameAsOperationId = true; o.GenerateAbstractSchemas = false; });
 builder.Services.AddSingleton<IClock>(new SystemClock());
-builder.Services.AddScoped<IDataContext, ApplicationDbContext>();
+builder.Services.AddScoped<IDataProvider, ApplicationDbContext>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IReportEngine, ReportBuilder>();
 
