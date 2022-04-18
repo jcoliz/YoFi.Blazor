@@ -12,12 +12,6 @@ This is an experimental project to port the [YoFi](https://github.com/jcoliz/yof
 
 ## Architecture
 
-This was my original thinking for when I was working on Blazor. 
-Obviously, I need to update this now for Vue.
+Here's the high-level whole-project architecture, showing the AspNet and Vue applications side by side, highlighting their differences as well as their shared underpinnings.
 
-Conceptually, it's still accurate. The difference is that there is no
-generated client. Right now, just calling endpoints directly. I'll 
-consider generating a client in the future. Also there is no separate client project. Client is contained in the YoFi.Vue/clientapp directory.
-
-
-[![System Architecture](/docs/images/YoFi-Blazor-Layers-R1.svg)](https://raw.githubusercontent.com/jcoliz/YoFi.WebApi/master/docs/images/YoFi-Blazor-Layers-R1.svg)
+[![System Architecture](/docs/images/YoFi-Layers-R2.svg)](https://raw.githubusercontent.com/jcoliz/YoFi.WebApi/master/docs/images/YoFi-Layers-R2.svg)
